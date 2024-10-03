@@ -22,7 +22,7 @@
             "input": "apps/ng-mf/public"
           }
         ],
-        "styles": ["apps/ng-mf/src/styles.scss"],
+        "styles": ["apps/ng-mf/src/styles.scss", "apps/my-lib/src/lib/assets/vcs-theme.scss"],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/ng-mf/webpack.config.ts"

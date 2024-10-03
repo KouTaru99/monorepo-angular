@@ -1,0 +1,29 @@
+{
+  "name": "my-lib",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/my-lib/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "apps/my-lib/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "apps/my-lib/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "apps/my-lib/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
