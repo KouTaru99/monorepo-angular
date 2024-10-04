@@ -2,9 +2,8 @@
   "name": "ng-mf",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "app",
   "sourceRoot": "apps/ng-mf/src",
-  "tags": [],
+  "prefix": "app",
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
@@ -15,14 +14,16 @@
         "main": "apps/ng-mf/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/ng-mf/tsconfig.app.json",
-        "inlineStyleLanguage": "scss",
         "assets": [
+          "apps/ng-mf/src/favicon.ico",
+          "apps/ng-mf/src/assets",
           {
             "glob": "**/*",
-            "input": "apps/ng-mf/public"
+            "input": "apps/my-lib/src/lib/assets",
+            "output": "assets"
           }
         ],
-        "styles": ["apps/ng-mf/src/styles.scss", "apps/my-lib/src/lib/assets/vcs-theme.scss"],
+        "styles": ["apps/ng-mf/src/styles.scss"],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/ng-mf/webpack.config.ts"
