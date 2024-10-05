@@ -1,5 +1,5 @@
-# Use an official Node runtime as the base image
-FROM node:18-alpine
+# Build stage
+FROM node:18-alpine AS build
 
 # Set the working directory in the container
 WORKDIR /app
@@ -16,14 +16,17 @@ COPY . .
 # Install Nx globally
 RUN npm install -g nx
 
-# Build the application
-RUN nx build ng-mf --prod
+# Build all applications (adjust this command based on your Nx workspace configuration)
+RUN nx run-many --target=build --all --prod
 
-# Use Nginx to serve the application
+# Nginx stage
 FROM nginx:alpine
 
-# Copy the build output to replace the default nginx contents.
-COPY --from=0 /app/dist/apps/ng-mf /usr/share/nginx/html
+# Copy the nginx configuration file
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copy all built applications to Nginx
+COPY --from=build /app/dist/apps /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80

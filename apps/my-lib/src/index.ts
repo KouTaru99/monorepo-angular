@@ -5,3 +5,5 @@ export * from './lib/components/vcs-topbar/vcs-topbar.component';
 export * from './lib/components/vcs-button/vcs-button.component';
 
 export * from './lib/components/vcs-icon/vcs-icon.component';
+
+export * from './lib/components/vcs-datatable/vcs-datatable.component';

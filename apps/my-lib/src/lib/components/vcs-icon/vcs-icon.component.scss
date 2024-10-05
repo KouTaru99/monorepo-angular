@@ -1,0 +1,29 @@
+.vcs-icon {
+  display: inline-block;
+
+  &-small {
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &-medium {
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &-large {
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}

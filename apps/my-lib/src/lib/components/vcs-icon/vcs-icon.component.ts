@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,10 +8,14 @@ import { CommonModule } from '@angular/common';
   templateUrl: './vcs-icon.component.html',
   styleUrls: ['./vcs-icon.component.scss'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule],
 })
 export class VcsIconComponent implements OnInit {
   @Input() iconName = '';
+  @Input() size: 'small' | 'medium' | 'large' = 'small';
+  @Input() color = '';
+  @Input() customClass = '';
+
   iconSvg: SafeHtml = '';
 
   constructor(
@@ -35,5 +39,10 @@ export class VcsIconComponent implements OnInit {
           this.iconSvg = '';
         }
       });
+  }
+
+  get iconClasses(): string {
+    // return ['vcs-icon', `vcs-icon-${this.size}`, this.customClass];
+    return `vcs-icon vcs-icon-${this.size} ${this.customClass}`;
   }
 }

@@ -1,8 +1,10 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Component, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
-import { navbarData } from './nav-data';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { fadeInOut, INavbarData } from './helper';
+import { SublevelMenuComponent } from './sublevel-menu.component.ts';
+import { navbarData } from './nav-data';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -13,26 +15,8 @@ interface SideNavToggle {
   selector: 'vcs-sidenav',
   templateUrl: './vcs-sidenav.component.html',
   styleUrls: ['./vcs-sidenav.component.scss'],
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
-  standalone: true,
   animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({opacity: 0}),
-        animate('350ms',
-          style({opacity: 1})
-        )
-      ]),
-      transition(':leave', [
-        style({opacity: 1}),
-        animate('350ms',
-          style({opacity: 0})
-        )
-      ])
-    ]),
+    fadeInOut,
     trigger('rotate', [
       transition(':enter', [
         animate('1000ms',
@@ -43,23 +27,28 @@ interface SideNavToggle {
         )
       ])
     ])
-  ]
+  ],
+  standalone: true,
+  imports: [CommonModule, RouterModule, SublevelMenuComponent],
 })
 export class VcsSidenavComponent implements OnInit {
 
-  @Output() toggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
+  @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
   screenWidth = 0;
-  navData = navbarData;
+  navData: INavbarData[] = navbarData;
+  multiple: boolean = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.screenWidth = window.innerWidth;
     if(this.screenWidth <= 768 ) {
       this.collapsed = false;
-      this.toggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+      this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
     }
   }
+
+  constructor(public router: Router) {}
 
   ngOnInit(): void {
       this.screenWidth = window.innerWidth;
@@ -67,11 +56,30 @@ export class VcsSidenavComponent implements OnInit {
 
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
-    this.toggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
   }
 
   closeSidenav(): void {
     this.collapsed = false;
-    this.toggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+  }
+
+  handleClick(item: INavbarData): void {
+    this.shrinkItems(item);
+    item.expanded = !item.expanded
+  }
+
+  getActiveClass(data: INavbarData): string {
+    return this.router.url.includes(data.routeLink) ? 'active' : '';
+  }
+
+  shrinkItems(item: INavbarData): void {
+    if (!this.multiple) {
+      for(let modelItem of this.navData) {
+        if (item !== modelItem && modelItem.expanded) {
+          modelItem.expanded = false;
+        }
+      }
+    }
   }
 }
