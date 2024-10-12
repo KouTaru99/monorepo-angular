@@ -1,8 +1,10 @@
 <ul class="remote-menu">
   <li><a routerLink="/">Home</a></li>
 </ul>
-<vcs-sidenav>
+<vcs-datatable [data]="(fakeData$ | async) ?? []" [columns]="columns" (rowSelected)="onRowSelected($event)" (search)="onSearch($event)"></vcs-datatable>
+
+<!-- <vcs-sidenav>
   <h1>my-contetnt</h1>
   <router-outlet></router-outlet>
-</vcs-sidenav>
+</vcs-sidenav> -->
 

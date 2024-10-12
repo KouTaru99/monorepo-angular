@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+}
+
+:host {
+  --mdc-checkbox-selected-focus-icon-color: #111113;
+    --mdc-checkbox-selected-hover-icon-color: #111113;
+    --mdc-checkbox-selected-icon-color: #111113;
+
+};
+
+/* Thêm hiệu ứng hover cho các dòng trong mat-table */
+.mat-mdc-row:hover {
+  background-color: pink; /* Màu xám nhạt khi hover */
+  transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi mượt mà */
+}

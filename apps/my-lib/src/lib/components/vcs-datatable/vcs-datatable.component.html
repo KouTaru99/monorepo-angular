@@ -1,0 +1,49 @@
+<div>
+  <mat-form-field *ngIf="searchable">
+    <input matInput [(ngModel)]="searchValue" (input)="handleSearch()" placeholder="Tìm kiếm">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [aria-label]="checkboxLabel()"
+                      disableRipple="true"
+                      disabledInteractive="true">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? toggleRow(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)"
+                      disableRipple="true"
+                      disabledInteractive="true">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
+      <th mat-header-cell *matHeaderCellDef> {{column.header}} </th>
+      <td mat-cell *matCellDef="let element"> {{formatCellValue(element, column)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions" *ngIf="actions.length > 0">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button *ngFor="let action of actions" (click)="handleAction(action, element)">
+          {{action.label}}
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <!-- handle click on row
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        (click)="toggleRow(row)"> </tr>-->
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+  </table>
+</div>
