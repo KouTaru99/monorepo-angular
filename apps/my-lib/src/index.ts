@@ -7,3 +7,5 @@ export * from './lib/components/vcs-button/vcs-button.component';
 export * from './lib/components/vcs-icon/vcs-icon.component';
 
 export * from './lib/components/vcs-datatable/vcs-datatable.component';
+
+export * from './lib/components/vcs-date-picker/vcs-date-picker.component';

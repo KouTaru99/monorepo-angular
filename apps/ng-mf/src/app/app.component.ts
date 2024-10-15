@@ -1,7 +1,7 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent } from '@ng-mf/my-lib';
+import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent } from '@ng-mf/my-lib';
 import { Observable, of } from 'rxjs';
 
 interface FakeData {
@@ -12,7 +12,7 @@ interface FakeData {
 
 @Component({
   standalone: true,
-  imports: [CommonModule, VcsSidenavComponent, RouterModule, VcsDatatableComponent, AsyncPipe],
+  imports: [CommonModule, VcsSidenavComponent, RouterModule, VcsDatatableComponent, AsyncPipe, VcsDatePickerComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
