@@ -8,4 +8,13 @@
   <router-outlet></router-outlet>
 </vcs-sidenav> -->
 
-<vcs-date-picker></vcs-date-picker>
+<div class="container" style="margin: 500px;">
+  <!-- <vcs-date-picker
+    [placeholder]="'Chọn ngày sinh'"
+    [format]="'dd/MM/yyyy'"
+    [disabled]="isDisabled"
+    (dateChange)="onBirthdayChange($event)">
+  </vcs-date-picker> -->
+  <vcs-toast message="Hello World" type="success" [duration]="duration"></vcs-toast>
+  <button (click)="onToastClick()">Click me</button>
+</div>

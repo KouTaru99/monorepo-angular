@@ -1,7 +1,7 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewContainerRef } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent } from '@ng-mf/my-lib';
+import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent } from '@ng-mf/my-lib';
 import { Observable, of } from 'rxjs';
 
 interface FakeData {
@@ -12,13 +12,14 @@ interface FakeData {
 
 @Component({
   standalone: true,
-  imports: [CommonModule, VcsSidenavComponent, RouterModule, VcsDatatableComponent, AsyncPipe, VcsDatePickerComponent],
+  imports: [CommonModule, VcsSidenavComponent, RouterModule, VcsDatatableComponent, AsyncPipe, VcsDatePickerComponent, VcsToastComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
+  duration = 3000;
   fakeData$: Observable<FakeData[]>;
   columns: ColumnDef[] = [
     { key: 'id', header: 'ID' },
@@ -26,7 +27,9 @@ export class AppComponent {
     { key: 'email', header: 'Email' }
   ];
 
-  constructor() {
+  isDisabled = false; // Add this line
+
+  constructor(private viewContainerRef: ViewContainerRef) {
     this.fakeData$ = of([
       { id: 1, name: 'Nguyễn Văn A', email: 'nguyenvana@example.com' },
       { id: 2, name: 'Trần Thị B', email: 'tranthib@example.com' },
@@ -42,5 +45,19 @@ export class AppComponent {
 
   onSearch(event: string) {
     console.log(event);
+  }
+
+  onBirthdayChange(event: any): void {
+    // Handle the date change event here
+    console.log('Birthday changed:', event);
+  }
+
+  onToastClick() {
+    console.log('Toast clicked');
+    const toastComponent = this.viewContainerRef.createComponent(VcsToastComponent);
+    toastComponent.instance.message = 'Hello World';
+    toastComponent.instance.type = 'info';
+    toastComponent.instance.duration = this.duration;
+    toastComponent.instance.show();
   }
 }

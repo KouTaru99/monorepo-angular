@@ -1,2 +1,11 @@
-<nz-date-picker></nz-date-picker> <!-- Add the nz-date-picker component -->
-
+<nz-range-picker
+  [nzShowTime]="true"
+  [(ngModel)]="date"
+  (ngModelChange)="onDateChange()"
+  [nzPlaceHolder]="placeholder"
+  [nzFormat]="format"
+  [nzDisabled]="disabled"
+  (nzOpenChange)="onOpenChange($event)"
+  (nzPanelChange)="onOpenChange($event)"
+>
+</nz-range-picker>

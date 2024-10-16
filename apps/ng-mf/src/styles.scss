@@ -1,3 +1,220 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'apps/my-lib/src/lib/assets/vcs-theme.scss';
 @import "~ng-zorro-antd/ng-zorro-antd.min.css";
+
+:root {
+  --date-range-color: pink;
+  --date-range-start-end-color: red;
+  --date-hover-color: red;
+  --date-today-color: black;
+  --date-text-color: white;
+}
+
+// Styles cho vcs-date-picker
+.ant-picker-panel {
+  .ant-picker-cell-in-view {
+    &.ant-picker-cell-range-start,
+    &.ant-picker-cell-range-end,
+    &:hover .ant-picker-cell-inner {
+      background-color: var(--date-range-start-end-color) !important;
+      color: var(--date-text-color) !important;
+    }
+
+    &.ant-picker-cell-today .ant-picker-cell-inner {
+      background-color: var(--date-today-color) !important;
+      color: var(--date-text-color) !important;
+    }
+
+    &.ant-picker-cell-in-range::before {
+      background-color: var(--date-range-color) !important;
+    }
+  }
+
+  // Thay đổi màu viền của các ô ngày thành hồng
+  .ant-picker-cell {
+    border-color: var(--date-range-color) !important;
+  }
+
+  // Thay đổi màu viền của ô ngày được chọn thành hồng đậm hơn
+  .ant-picker-cell-selected .ant-picker-cell-inner,
+  .ant-picker-cell-range-start .ant-picker-cell-inner,
+  .ant-picker-cell-range-end .ant-picker-cell-inner {
+    border-color: #FF69B4 !important; // Màu hồng đậm hơn
+  }
+
+  // Đảm bảo viền của ngày hôm nay cũng là màu hồng
+  .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+    border-color: var(--date-range-color) !important;
+  }
+}
+
+// Loại bỏ màu xanh cho nút OK
+// .ant-picker-ok {
+//   display: none !important;
+// }
+.ant-picker-ok button {
+  background-color: var(--date-range-start-end-color) !important;
+  border-color: var(--date-range-start-end-color) !important;
+  color: var(--date-text-color) !important;
+}
+
+.ant-picker-footer-extra {
+  text-align: right;
+}
+.ant-picker-footer-extra:not(:last-child) {
+  border: none;
+}
+
+// Thay đổi màu viền của toàn bộ bảng lịch thành hồng
+.ant-picker-panel-container {
+  border-color: var(--date-range-color) !important;
+}
+
+// Ghi đè màu hover mặc định
+.ant-picker-cell-in-view {
+  &.ant-picker-cell-in-range,
+  &.ant-picker-cell-range-start,
+  &.ant-picker-cell-range-end,
+  &.ant-picker-cell-range-hover,
+  &.ant-picker-cell-range-hover-start,
+  &.ant-picker-cell-range-hover-end {
+    &::before, &::after {
+      background: var(--date-hover-color) !important;
+    }
+    .ant-picker-cell-inner {
+      color: var(--date-text-color) !important;
+    }
+  }
+}
+
+// Đảm bảo màu chữ là trắng khi hover
+.ant-picker-cell-in-view.ant-picker-cell-in-range.ant-picker-cell-range-hover-start .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-in-range.ant-picker-cell-range-hover-end .ant-picker-cell-inner {
+  color: var(--date-text-color) !important;
+}
+
+// Duy trì màu đỏ cho ngày bắt đầu và kết thúc khi hover
+.ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
+  background: var(--date-range-start-end-color) !important;
+  color: var(--date-text-color) !important;
+}
+
+.ant-picker-cell:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end):not(.ant-picker-cell-range-hover-start):not(.ant-picker-cell-range-hover-end) .ant-picker-cell-inner {
+  background: #ffd1dc !important; // Màu hồng nhạt hơn khi hover
+}
+
+.ant-picker-date-panel {
+  .ant-picker-cell-in-view.ant-picker-cell-in-range {
+    &.ant-picker-cell-range-hover-end .ant-picker-cell-inner::after,
+    &.ant-picker-cell-range-hover-start .ant-picker-cell-inner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: var(--date-hover-color) !important;
+      width: 0px; // Thay vì sử dụng margin-left
+    }
+
+    &.ant-picker-cell-range-hover-start .ant-picker-cell-inner::after {
+      right: 0;
+    }
+
+    &.ant-picker-cell-range-hover-end .ant-picker-cell-inner::after {
+      left: 0;
+    }
+  }
+}
+
+.ant-picker-cell {
+  padding: 0 !important;
+
+  .ant-picker-cell-inner {
+    width: 100% !important;
+    height: 32px !important;
+    line-height: 32px !important;
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 0 !important;
+    position: relative !important; // Thêm vào để định vị pseudo-element
+  }
+
+  &-in-view {
+    &.ant-picker-cell-in-range {
+      .ant-picker-cell-inner {
+        background-color: pink !important;
+      }
+    }
+
+    &.ant-picker-cell-range-start .ant-picker-cell-inner,
+    &.ant-picker-cell-range-end .ant-picker-cell-inner,
+    &.ant-picker-cell-selected .ant-picker-cell-inner {
+      background-color: red !important;
+      color: white !important;
+    }
+
+    &.ant-picker-cell-today .ant-picker-cell-inner {
+      background-color: var(--date-today-color) !important;
+      color: var(--date-text-color) !important;
+      &::before {
+        border: none !important; // Loại bỏ viền mặc định
+      }
+    }
+
+    // Điều chỉnh hiệu ứng hover
+    &:hover .ant-picker-cell-inner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 0, 0, 0.5) !important; // Màu đỏ với độ trong suốt
+      z-index: 1;
+    }
+  }
+}
+
+// Loại bỏ khoảng trắng giữa các tuần
+.ant-picker-content th, .ant-picker-content td {
+  padding: 0 !important;
+}
+
+// Loại bỏ viền giữa các ô
+.ant-picker-cell {
+  border: none !important;
+}
+
+// Đảm bảo màu nền hồng cho toàn bộ khoảng được chọn
+.ant-picker-cell-in-view.ant-picker-cell-in-range::before {
+  background: pink !important;
+  opacity: 1 !important;
+}
+
+// Đảm bảo ngày hiện tại không bị che khuất bởi các hiệu ứng khác
+.ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner {
+  z-index: 2 !important;
+}
+
+.ant-picker {
+  &:focus,
+  &-focused {
+    border-color: #111113 !important;
+    box-shadow: 0 0 0 2px rgba(17, 17, 19, 0.2) !important;
+  }
+
+  &-range {
+    &:hover,
+    &:focus {
+      .ant-picker-active-bar {
+        background: #111113 !important;
+      }
+    }
+  }
+}
+
+.ant-picker-range .ant-picker-active-bar {
+  background: #111113 !important;
+}
