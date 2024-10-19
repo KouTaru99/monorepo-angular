@@ -1,7 +1,7 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewContainerRef } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent } from '@ng-mf/my-lib';
+import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService } from '@ng-mf/my-lib';
 import { Observable, of } from 'rxjs';
 
 interface FakeData {
@@ -27,9 +27,9 @@ export class AppComponent {
     { key: 'email', header: 'Email' }
   ];
 
-  isDisabled = false; // Add this line
+  isDisabled = false;
 
-  constructor(private viewContainerRef: ViewContainerRef) {
+  constructor(private viewContainerRef: ViewContainerRef, private vcsToastService: VcsToastService) {
     this.fakeData$ = of([
       { id: 1, name: 'Nguyễn Văn A', email: 'nguyenvana@example.com' },
       { id: 2, name: 'Trần Thị B', email: 'tranthib@example.com' },
@@ -48,16 +48,22 @@ export class AppComponent {
   }
 
   onBirthdayChange(event: any): void {
-    // Handle the date change event here
     console.log('Birthday changed:', event);
   }
 
   onToastClick() {
-    console.log('Toast clicked');
-    const toastComponent = this.viewContainerRef.createComponent(VcsToastComponent);
-    toastComponent.instance.message = 'Hello World';
-    toastComponent.instance.type = 'info';
-    toastComponent.instance.duration = this.duration;
-    toastComponent.instance.show();
+    this.vcsToastService.show('Đây là thông báo thành công!', 'success', this.duration);
+  }
+
+  showInfoToast() {
+    this.vcsToastService.show('Đây là thông báo thông tin!', 'info', this.duration);
+  }
+
+  showWarningToast() {
+    this.vcsToastService.show('Đây là thông báo cảnh báo!', 'warning', this.duration);
+  }
+
+  showErrorToast() {
+    this.vcsToastService.show('Đây là thông báo lỗi!', 'error', this.duration);
   }
 }

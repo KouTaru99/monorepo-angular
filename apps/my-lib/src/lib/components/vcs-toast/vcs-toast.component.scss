@@ -1,0 +1,14 @@
+::ng-deep .custom-notification {
+  .ant-notification-notice-message {
+    margin-bottom: 0;
+  }
+
+  .ant-notification-notice-description {
+    margin-left: 24px;
+  }
+
+  .ant-notification-notice-with-icon .ant-notification-notice-message {
+    margin-left: 24px;
+  }
+}
+

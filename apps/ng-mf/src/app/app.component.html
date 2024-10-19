@@ -16,5 +16,8 @@
     (dateChange)="onBirthdayChange($event)">
   </vcs-date-picker> -->
   <vcs-toast message="Hello World" type="success" [duration]="duration"></vcs-toast>
-  <button (click)="onToastClick()">Click me</button>
+  <button (click)="onToastClick()">Success Toast</button>
+  <button (click)="showInfoToast()">Info Toast</button>
+  <button (click)="showWarningToast()">Warning Toast</button>
+  <button (click)="showErrorToast()">Error Toast</button>
 </div>
