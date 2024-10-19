@@ -16,3 +16,5 @@ export * from './lib/components/vcs-dialog/vcs-dialog.component';
 
 export * from './lib/components/vcs-toast/vcs-toast.component';
 export * from './lib/components/vcs-toast/vcs-toast.service';
+
+export * from './lib/components/vcs-dialog/vcs-dialog.service';

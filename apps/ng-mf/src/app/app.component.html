@@ -20,4 +20,16 @@
   <button (click)="showInfoToast()">Info Toast</button>
   <button (click)="showWarningToast()">Warning Toast</button>
   <button (click)="showErrorToast()">Error Toast</button>
+  <button (click)="openSimpleDialog()">Mở Dialog Đơn Giản</button>
+  <button (click)="openCustomDialog()">Mở Dialog Tùy Chỉnh</button>
+  <button (click)="openConfirmDialog()">Mở Dialog Xác Nhận</button>
+  <ng-template #customDialogContent>
+    <h3>Nội dung tùy chỉnh</h3>
+    <p>Đây là một ví dụ về nội dung dialog tùy chỉnh.</p>
+    <ul>
+      <li>Mục 1</li>
+      <li>Mục 2</li>
+      <li>Mục 3</li>
+    </ul>
+  </ng-template>
 </div>

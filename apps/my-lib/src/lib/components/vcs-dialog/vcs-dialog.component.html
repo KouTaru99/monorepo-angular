@@ -1,1 +1,11 @@
-<p>vcs-dialog works!</p>
+
+<ng-template #modalContent>
+  <ng-container *ngIf="modalContent">
+    <ng-container *ngIf="modalContent instanceof TemplateRef; else stringContent">
+      <ng-container *ngTemplateOutlet="modalContent"></ng-container>
+    </ng-container>
+    <ng-template #stringContent>
+      {{ modalContent }}
+    </ng-template>
+  </ng-container>
+</ng-template>
