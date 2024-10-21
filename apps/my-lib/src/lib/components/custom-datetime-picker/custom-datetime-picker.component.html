@@ -1,0 +1,16 @@
+  <label>
+    Date Time Range:
+    <input [owlDateTimeTrigger]="dt11" [owlDateTime]="dt11"
+           [selectMode]="'range'"
+           [(ngModel)]="selectedDate"
+           (ngModelChange)="onDateTimeChange($event)">
+    <owl-date-time #dt11 [showSecondsTimer]="true"></owl-date-time>
+  </label>
+  <!-- <label>
+    Time
+    <input [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4"
+           formControlName="time"
+           (dateTimeChange)="dateTimeForm.get('time')?.setValue($event.value ? formatDate($event.value) : '')">
+    <owl-date-time [pickerType]="'timer'" #dt4 [showSecondsTimer]="true" [parseInput]="parseDate" [formatInput]="formatDate"></owl-date-time>
+  </label> -->
+

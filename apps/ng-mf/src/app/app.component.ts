@@ -1,8 +1,10 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewContainerRef, TemplateRef, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, VcsDialogService } from '@ng-mf/my-lib';
+import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, VcsDialogService, CustomDatetimePickerComponent, CustomToastFromMaterialService, CustomDialogService } from '@ng-mf/my-lib';
 import { Observable, of } from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 interface FakeData {
   id: number;
@@ -12,7 +14,14 @@ interface FakeData {
 
 @Component({
   standalone: true,
-  imports: [CommonModule, VcsSidenavComponent, RouterModule, VcsDatatableComponent, AsyncPipe, VcsDatePickerComponent, VcsToastComponent],
+  imports: [CommonModule,
+    VcsSidenavComponent,
+    RouterModule, VcsDatatableComponent,
+    AsyncPipe, VcsDatePickerComponent, VcsToastComponent,
+    MatFormFieldModule,
+    MatInputModule,
+    CustomDatetimePickerComponent
+  ],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -34,7 +43,9 @@ export class AppComponent {
   constructor(
     private viewContainerRef: ViewContainerRef,
     private vcsToastService: VcsToastService,
-    private vcsDialogService: VcsDialogService
+    private vcsDialogService: VcsDialogService,
+    private customToastService: CustomToastFromMaterialService,
+    private customDialogService: CustomDialogService
   ) {
     this.fakeData$ = of([
       { id: 1, name: 'Nguyễn Văn A', email: 'nguyenvana@example.com' },
@@ -55,22 +66,6 @@ export class AppComponent {
 
   onBirthdayChange(event: any): void {
     console.log('Birthday changed:', event);
-  }
-
-  onToastClick() {
-    this.vcsToastService.show('Đây là thông báo thành công!', 'success', this.duration);
-  }
-
-  showInfoToast() {
-    this.vcsToastService.show('Đây là thông báo thông tin!', 'info', this.duration);
-  }
-
-  showWarningToast() {
-    this.vcsToastService.show('Đây là thông báo cảnh báo!', 'warning', this.duration);
-  }
-
-  showErrorToast() {
-    this.vcsToastService.show('Đây là thông báo lỗi!', 'error', this.duration);
   }
 
   openSimpleDialog() {
@@ -104,5 +99,37 @@ export class AppComponent {
       onOk: () => console.log('Người dùng đã xác nhận hành động'),
       onCancel: () => console.log('Người dùng đã hủy hành động')
     });
+  }
+
+  openToast() {
+    this.customToastService.showSuccess('Thành công', 'Đây là một thông báo thành công', 'Thực hiện', () => console.log('Thực hiện hành động'));
+  }
+
+  openConfirmDialog1() {
+    this.customDialogService.confirm('Confirm Action', 'Are you sure you want to proceed?')
+      .subscribe(result => {
+        if (result) {
+          console.log('User confirmed');
+        } else {
+          console.log('User cancelled');
+        }
+      });
+  }
+
+  openActionDialog() {
+    this.customDialogService.action('Choose an Action', 'Select one of the following options:', [
+      { label: 'Option 1', value: 1 },
+      { label: 'Option 2', value: 2 },
+      { label: 'Option 3', value: 3 }
+    ]).subscribe(result => {
+      console.log('User selected:', result);
+    });
+  }
+
+  openInformationDialog() {
+    this.customDialogService.information('Information', 'This is an informational message.')
+      .subscribe(() => {
+        console.log('User acknowledged the information');
+      });
   }
 }

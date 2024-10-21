@@ -1,0 +1,69 @@
+::ng-deep {
+  .toast-container .ngx-toastr {
+    padding: 0;
+    width: auto;
+    max-width: none;
+  }
+}
+
+.custom-toast {
+  display: flex;
+  align-items: center;
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  min-width: 300px;
+  max-width: 400px;
+}
+
+.toast-icon {
+  margin-right: 12px;
+}
+
+.toast-content {
+  flex-grow: 1;
+}
+
+.toast-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.toast-message {
+  font-size: 14px;
+}
+
+.toast-actions {
+  display: flex;
+  align-items: center;
+  margin-left: 12px;
+}
+
+.mat-button {
+  color: white;
+}
+
+.mat-icon-button {
+  color: white;
+}
+
+// Thêm styles cho các loại toast khác nhau
+.toast-success {
+  background-color: #4CAF50;
+  // background-image: url('../../../../assets/images/success.png');
+  background-image: none;
+}
+
+.toast-error {
+  background-color: #F44336;
+}
+
+.toast-info {
+  background-color: #2196F3;
+}
+
+.toast-warning {
+  background-color: #FF9800;
+}

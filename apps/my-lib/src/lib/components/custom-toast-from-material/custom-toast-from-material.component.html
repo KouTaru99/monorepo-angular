@@ -1,0 +1,15 @@
+<div class="custom-toast" [ngClass]="toastClasses">
+  <mat-icon class="toast-icon">{{icon}}</mat-icon>
+  <div class="toast-content">
+    <h3 class="toast-title">{{title}}</h3>
+    <p class="toast-message">{{message}}</p>
+  </div>
+  <div class="toast-actions">
+    <button mat-button *ngIf="toastPackage.config.payload?.data?.actionLabel" (click)="action()">
+      {{toastPackage.config.payload?.data?.actionLabel}}
+    </button>
+    <button mat-icon-button (click)="remove()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

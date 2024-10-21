@@ -15,11 +15,11 @@
     [disabled]="isDisabled"
     (dateChange)="onBirthdayChange($event)">
   </vcs-date-picker> -->
-  <vcs-toast message="Hello World" type="success" [duration]="duration"></vcs-toast>
-  <button (click)="onToastClick()">Success Toast</button>
-  <button (click)="showInfoToast()">Info Toast</button>
-  <button (click)="showWarningToast()">Warning Toast</button>
-  <button (click)="showErrorToast()">Error Toast</button>
+  <button (click)="openConfirmDialog1()">Mở Dialog Xác Nhận</button>
+  <button (click)="openActionDialog()">Mở Dialog Chọn</button>
+  <button (click)="openInformationDialog()">Mở Dialog Thông Tin</button>
+  <custom-datetime-picker></custom-datetime-picker>
+  <button (click)="openToast()">Mở Toast</button>
   <button (click)="openSimpleDialog()">Mở Dialog Đơn Giản</button>
   <button (click)="openCustomDialog()">Mở Dialog Tùy Chỉnh</button>
   <button (click)="openConfirmDialog()">Mở Dialog Xác Nhận</button>

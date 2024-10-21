@@ -1,0 +1,25 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content>
+  <p>{{data.message}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <ng-container [ngSwitch]="data.type">
+    <ng-container *ngSwitchCase="'confirm'">
+      <button mat-button (click)="onClose()">{{data.cancelText || 'No'}}</button>
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial>{{data.confirmText || 'Yes'}}</button>
+    </ng-container>
+    <ng-container *ngSwitchCase="'action'">
+      <button mat-button *ngFor="let action of data.actions" (click)="onAction(action.value)">
+        {{action.label}}
+      </button>
+    </ng-container>
+    <ng-container *ngSwitchCase="'information'">
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial>OK</button>
+    </ng-container>
+  </ng-container>
+</mat-dialog-actions>
