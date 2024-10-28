@@ -28,3 +28,9 @@ export * from './lib/components/custom-toast-from-material/custom-toast-from-mat
 export * from './lib/components/custom-dialog/custom-dialog.component';
 
 export * from './lib/components/custom-dialog/custom-dialog.service';
+
+export * from './lib/components/vcs-select/vcs-select.component';
+
+export * from './lib/components/vcs-pagination/vcs-pagination.component';
+
+export * from './lib/components/vcs-file-upload/vcs-file-upload.component';

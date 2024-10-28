@@ -1,10 +1,12 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewContainerRef, TemplateRef, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, VcsDialogService, CustomDatetimePickerComponent, CustomToastFromMaterialService, CustomDialogService } from '@ng-mf/my-lib';
+import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, VcsDialogService, CustomDatetimePickerComponent, CustomToastFromMaterialService, CustomDialogService, VcsSelectComponent, VcsPaginationComponent, VcsFileUploadComponent } from '@ng-mf/my-lib';
 import { Observable, of } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { DatetimeModalComponent } from './components/datetime-modal/datetime-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface FakeData {
   id: number;
@@ -20,7 +22,9 @@ interface FakeData {
     AsyncPipe, VcsDatePickerComponent, VcsToastComponent,
     MatFormFieldModule,
     MatInputModule,
-    CustomDatetimePickerComponent
+    CustomDatetimePickerComponent,
+    VcsSelectComponent,
+    VcsPaginationComponent
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -45,7 +49,8 @@ export class AppComponent {
     private vcsToastService: VcsToastService,
     private vcsDialogService: VcsDialogService,
     private customToastService: CustomToastFromMaterialService,
-    private customDialogService: CustomDialogService
+    private customDialogService: CustomDialogService,
+    private dialog: MatDialog
   ) {
     this.fakeData$ = of([
       { id: 1, name: 'Nguyễn Văn A', email: 'nguyenvana@example.com' },
@@ -131,5 +136,30 @@ export class AppComponent {
       .subscribe(() => {
         console.log('User acknowledged the information');
       });
+  }
+
+  yourOptions  = [
+    { key: 1, value: 'Option 1' },
+    { key: 2, value: 'Option 2' },
+    { key: 3, value: 'Option 3' }
+  ];;
+  initialSelectedValue = [{ key: 2, value: 'Option 2' }] // or ['Mushroom', 'Onion'] for multiple
+
+  onSelectionChange(newValue: any) {
+    console.log('New selection:', newValue);
+  }
+
+  openDatetimeDialog() {
+    this.dialog.open(DatetimeModalComponent, {
+      data: { title: 'Chọn ngày giờ' }
+    });
+  }
+
+  openFileUploadDialog() {
+    this.dialog.open(VcsFileUploadComponent, {
+      data: { accept: 'image/*', multiple: true }
+    }).afterClosed().subscribe(result => {
+      console.log('File upload result:', result);
+    });
   }
 }

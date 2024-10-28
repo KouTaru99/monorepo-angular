@@ -1,0 +1,80 @@
+::ng-deep {
+  // Calendar table styles
+  .owl-dt-calendar-table {
+    .owl-dt-calendar-cell {
+      &-content {
+        border-radius: 4px;
+      }
+
+      &-in-range {
+        background-color: pink;
+
+        &.owl-dt-calendar-cell-range-from {
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 0;
+        }
+
+        &.owl-dt-calendar-cell-range-to {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 4px;
+        }
+      }
+
+      &-today:not(.owl-dt-calendar-cell-selected) {
+        background-color: #000;
+        color: #fff;
+      }
+
+      &-selected {
+        background-color: red;
+        color: #fff;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  // Today cell style
+  .owl-dt-calendar-cell-today {
+    background-color: #000 !important;
+    box-shadow: none !important;
+  }
+
+  // Time picker styles
+  .owl-dt-timer-content .owl-dt-timer-input {
+    border-color: red;
+    background-color: pink;
+    color: red;
+  }
+
+  // Footer picker styles
+  .owl-dt-container-buttons {
+    height: auto;
+    padding: 24px;
+    color: unset;
+    justify-content: flex-end;
+    gap: 8px;
+
+    .owl-dt-container-control-button {
+      width: auto;
+      height: 40px;
+      padding: 8px;
+      border-radius: 4px;
+      &:hover {
+        .owl-dt-control-button-content {
+          background-color: inherit;
+        }
+      }
+      &:last-child {
+        background-color: #000;
+        color: #fff;
+      }
+      &:first-child {
+        background-color: inherit;
+        color: #111113;
+        &:hover {
+          background-color: #ccc;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+<nav class="pagination" aria-label="Pagination">
+  <ul class="pagination-list">
+    <!-- First page -->
+    <li>
+      <button
+        class="pagination-button"
+        [disabled]="currentPage === 1"
+        (click)="onPageChange(1)">
+        «
+      </button>
+    </li>
+
+    <!-- Previous page -->
+    <li>
+      <button
+        class="pagination-button"
+        [disabled]="currentPage === 1"
+        (click)="previousPage()">
+        ‹
+      </button>
+    </li>
+
+    <!-- Page numbers -->
+    <li *ngFor="let page of visiblePages; let i = index">
+      <!-- Left ellipsis -->
+      <ng-container *ngIf="i === 1 && showLeftEllipsis">
+        <span class="pagination-ellipsis">...</span>
+      </ng-container>
+
+      <button
+        class="pagination-button"
+        [class.active]="page === currentPage"
+        (click)="onPageChange(page)">
+        {{page}}
+      </button>
+
+      <!-- Right ellipsis -->
+      <ng-container *ngIf="i === visiblePages.length - 2 && showRightEllipsis">
+        <span class="pagination-ellipsis">...</span>
+      </ng-container>
+    </li>
+
+    <!-- Next page -->
+    <li>
+      <button
+        class="pagination-button"
+        [disabled]="currentPage === totalPages"
+        (click)="nextPage()">
+        ›
+      </button>
+    </li>
+
+    <!-- Last page -->
+    <li>
+      <button
+        class="pagination-button"
+        [disabled]="currentPage === totalPages"
+        (click)="onPageChange(totalPages)">
+        »
+      </button>
+    </li>
+  </ul>
+</nav>

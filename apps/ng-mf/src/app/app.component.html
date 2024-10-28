@@ -15,14 +15,17 @@
     [disabled]="isDisabled"
     (dateChange)="onBirthdayChange($event)">
   </vcs-date-picker> -->
-  <button (click)="openConfirmDialog1()">Mở Dialog Xác Nhận</button>
-  <button (click)="openActionDialog()">Mở Dialog Chọn</button>
-  <button (click)="openInformationDialog()">Mở Dialog Thông Tin</button>
-  <custom-datetime-picker></custom-datetime-picker>
-  <button (click)="openToast()">Mở Toast</button>
-  <button (click)="openSimpleDialog()">Mở Dialog Đơn Giản</button>
-  <button (click)="openCustomDialog()">Mở Dialog Tùy Chỉnh</button>
-  <button (click)="openConfirmDialog()">Mở Dialog Xác Nhận</button>
+
+  <vcs-select
+    [options]="yourOptions"
+    [selected]="initialSelectedValue"
+    (selectedChange)="onSelectionChange($event)"
+    [label]="'Chọn Topping'"
+    [placeholder]="'Chọn Topping'"
+    [required]="true"
+    [multiple]="true"
+    >
+  </vcs-select>
   <ng-template #customDialogContent>
     <h3>Nội dung tùy chỉnh</h3>
     <p>Đây là một ví dụ về nội dung dialog tùy chỉnh.</p>
@@ -32,4 +35,6 @@
       <li>Mục 3</li>
     </ul>
   </ng-template>
+  <vcs-pagination [totalPages]="10" [currentPage]="1"></vcs-pagination>
+  <button (click)="openFileUploadDialog()">Mở Dialog Upload File</button>
 </div>
