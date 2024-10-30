@@ -1,5 +1,5 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ViewContainerRef, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewContainerRef, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, VcsDialogService, CustomDatetimePickerComponent, CustomToastFromMaterialService, CustomDialogService, VcsSelectComponent, VcsPaginationComponent, VcsFileUploadComponent } from '@ng-mf/my-lib';
 import { Observable, of } from 'rxjs';
@@ -7,6 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DatetimeModalComponent } from './components/datetime-modal/datetime-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 interface FakeData {
   id: number;
@@ -24,14 +26,49 @@ interface FakeData {
     MatInputModule,
     CustomDatetimePickerComponent,
     VcsSelectComponent,
-    VcsPaginationComponent
+    VcsPaginationComponent,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  selectedOption = '';
+  inputControl = new FormControl('', [Validators.required]);
+  errorMessage = '';
+
+  onSelectionChangeToError() {
+    switch (this.selectedOption) {
+      case 'one':
+        this.inputControl.setErrors({ custom: true });
+        this.errorMessage = 'Error for option one';
+        break;
+      case 'two':
+        this.inputControl.setErrors({ custom: true });
+        this.errorMessage = 'Error for option two';
+        break;
+      default:
+        this.inputControl.setErrors(null);
+        break;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   @ViewChild('customDialogContent') customDialogContent!: TemplateRef<void>;
 
   duration = 3000;
@@ -161,5 +198,32 @@ export class AppComponent {
     }).afterClosed().subscribe(result => {
       console.log('File upload result:', result);
     });
+  }
+
+  paramObj = {
+    id: 1,
+    name: 'test',
+    sorts: ['name,DESC', 'id,ASC'],
+    page: null,
+    size: null,
+    query: ''
+  };
+
+  convertParamToQueryString(paramObj: any): string {
+    const queryString = Object.entries(paramObj)
+      .filter(([_, value]) => value !== null && value !== undefined && value !== '')
+      .map(([key, value]) => {
+        if (Array.isArray(value)) {
+          return value.map(item => `${key}=${item}`).join('&');
+        }
+        return `${key}=${value}`;
+      })
+      .join('&');
+    return queryString;
+  }
+
+  ngOnInit(): void {
+    const queryString = this.convertParamToQueryString(this.paramObj);
+    console.log(queryString);
   }
 }

@@ -1,21 +1,4 @@
-<ul class="remote-menu">
-  <li><a routerLink="/">Home</a></li>
-</ul>
-<!-- <vcs-datatable [data]="(fakeData$ | async) ?? []" [columns]="columns" (rowSelected)="onRowSelected($event)" (search)="onSearch($event)"></vcs-datatable> -->
-
-<!-- <vcs-sidenav>
-  <h1>my-contetnt</h1>
-  <router-outlet></router-outlet>
-</vcs-sidenav> -->
-
-<div class="container" style="margin: 500px;">
-  <!-- <vcs-date-picker
-    [placeholder]="'Chọn ngày sinh'"
-    [format]="'dd/MM/yyyy'"
-    [disabled]="isDisabled"
-    (dateChange)="onBirthdayChange($event)">
-  </vcs-date-picker> -->
-
+<!-- <div class="container" style="margin: 500px;">
   <vcs-select
     [options]="yourOptions"
     [selected]="initialSelectedValue"
@@ -37,4 +20,25 @@
   </ng-template>
   <vcs-pagination [totalPages]="10" [currentPage]="1"></vcs-pagination>
   <button (click)="openFileUploadDialog()">Mở Dialog Upload File</button>
+</div> -->
+<div style="display: flex; flex-direction: column; align-items: flex-start; margin: 100px;">
+  <mat-form-field>
+    <mat-label>Select</mat-label>
+    <mat-select [(ngModel)]="selectedOption" (selectionChange)="onSelectionChangeToError()">
+      <mat-option value="one">IMSI</mat-option>
+      <mat-option value="two">IMEI</mat-option>
+      <mat-option value="three">Right</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Input</mat-label>
+    <input matInput [formControl]="inputControl">
+    <mat-error *ngIf="inputControl.errors?.['required']">This field is required</mat-error>
+    <mat-error *ngIf="inputControl.errors?.['custom']">{{ errorMessage }}</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Textarea</mat-label>
+    <textarea matInput></textarea>
+  </mat-form-field>
 </div>
