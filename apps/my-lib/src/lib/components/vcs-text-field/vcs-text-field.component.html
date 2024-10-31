@@ -1,0 +1,15 @@
+<div class="form-field">
+  <label [for]="controlKey">{{label}}</label>
+  <mat-form-field appearance="outline">
+    <input matInput
+           [formControlName]="controlKey"
+           [id]="controlKey"
+           [type]="type"
+           [disabled]="disabled"
+           (input)="onInput($event)"
+           >
+    <mat-error *ngIf="required && control?.errors?.['required']">
+      {{errorMessage}}
+    </mat-error>
+  </mat-form-field>
+</div>

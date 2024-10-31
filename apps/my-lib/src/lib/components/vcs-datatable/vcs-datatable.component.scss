@@ -14,3 +14,14 @@ table {
   background-color: pink; /* Màu xám nhạt khi hover */
   transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi mượt mà */
 }
+
+:host {
+  .mat-mdc-table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .mat-mdc-cell {
+    box-sizing: border-box;
+  }
+}

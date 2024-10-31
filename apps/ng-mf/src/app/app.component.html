@@ -22,23 +22,24 @@
   <button (click)="openFileUploadDialog()">Mở Dialog Upload File</button>
 </div> -->
 <div style="display: flex; flex-direction: column; align-items: flex-start; margin: 100px;">
-  <mat-form-field>
-    <mat-label>Select</mat-label>
-    <mat-select [(ngModel)]="selectedOption" (selectionChange)="onSelectionChangeToError()">
-      <mat-option value="one">IMSI</mat-option>
-      <mat-option value="two">IMEI</mat-option>
-      <mat-option value="three">Right</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <form [formGroup]="form">
+    <vcs-text-field
+      controlKey="inputControl"
+      [label]="'Nhập thông tin'"
+      [required]="true"
+      [errorMessage]="errorMessage"
+      >
+    </vcs-text-field>
+  </form>
 
   <mat-form-field>
-    <mat-label>Input</mat-label>
-    <input matInput [formControl]="inputControl">
-    <mat-error *ngIf="inputControl.errors?.['required']">This field is required</mat-error>
-    <mat-error *ngIf="inputControl.errors?.['custom']">{{ errorMessage }}</mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Textarea</mat-label>
-    <textarea matInput></textarea>
-  </mat-form-field>
+    <mat-label>Select an option</mat-label>
+    <mat-select [(ngModel)]="selectedOption" (selectionChange)="handleRefresh()">
+      <mat-option value="null">Tắt làm mới dữ liệu</mat-option>
+      <mat-option value="1">Làm mới mỗi 1 giây</mat-option>
+      <mat-option value="3">Làm mới mỗi 3 giây</mat-option>
+    </mat-select>
+    </mat-form-field>
 </div>
+
+<vcs-datatable [data]="(fakeData$ | async) ?? []" [searchable]="true" [columns]="columns"></vcs-datatable>

@@ -34,3 +34,5 @@ export * from './lib/components/vcs-select/vcs-select.component';
 export * from './lib/components/vcs-pagination/vcs-pagination.component';
 
 export * from './lib/components/vcs-file-upload/vcs-file-upload.component';
+
+export * from './lib/components/vcs-text-field/vcs-text-field.component';

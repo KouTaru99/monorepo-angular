@@ -7,6 +7,8 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { VcsEllipsisDirective } from './ellipsis.directive';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 export interface ColumnDef {
   key: string;
@@ -34,7 +36,9 @@ export interface Action {
     MatTableModule,
     MatCheckboxModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
+    VcsEllipsisDirective,
+    MatTooltipModule
   ]
 })
 export class VcsDatatableComponent implements OnInit {

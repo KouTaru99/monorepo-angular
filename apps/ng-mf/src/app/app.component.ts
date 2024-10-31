@@ -1,14 +1,14 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewContainerRef, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, VcsDialogService, CustomDatetimePickerComponent, CustomToastFromMaterialService, CustomDialogService, VcsSelectComponent, VcsPaginationComponent, VcsFileUploadComponent } from '@ng-mf/my-lib';
-import { Observable, of } from 'rxjs';
+import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, VcsDialogService, CustomDatetimePickerComponent, CustomToastFromMaterialService, CustomDialogService, VcsSelectComponent, VcsPaginationComponent, VcsFileUploadComponent, VcsTextFieldComponent } from '@ng-mf/my-lib';
+import { Observable, of, Subscription, tap, interval } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DatetimeModalComponent } from './components/datetime-modal/datetime-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
-import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 interface FakeData {
   id: number;
@@ -29,7 +29,8 @@ interface FakeData {
     VcsPaginationComponent,
     MatSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    VcsTextFieldComponent
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -37,25 +38,50 @@ interface FakeData {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
-
+  form!: FormGroup;
   selectedOption = '';
-  inputControl = new FormControl('', [Validators.required]);
-  errorMessage = '';
+  errorMessage = 'trường bắt buộc';
 
   onSelectionChangeToError() {
     switch (this.selectedOption) {
       case 'one':
-        this.inputControl.setErrors({ custom: true });
+        this.form.get('inputControl')?.setErrors({ custom: true });
         this.errorMessage = 'Error for option one';
         break;
       case 'two':
-        this.inputControl.setErrors({ custom: true });
+        this.form.get('inputControl')?.setErrors({ custom: true });
         this.errorMessage = 'Error for option two';
         break;
       default:
-        this.inputControl.setErrors(null);
+        this.form.get('inputControl')?.setErrors(null);
         break;
     }
+  }
+
+  refreshInterval: Subscription | null = null;
+
+  handleRefresh() {
+    // Hủy subscription cũ nếu có
+    if (this.refreshInterval) {
+      this.refreshInterval.unsubscribe();
+      this.refreshInterval = null;
+    }
+
+    // Nếu selectedOption là null thì không làm gì
+    if (this.selectedOption === 'null') {
+      return;
+    }
+
+    // Tạo interval mới dựa trên selectedOption (đơn vị là giây)
+    const intervalTime = parseInt(this.selectedOption) * 1000;
+    this.refreshInterval = interval(intervalTime)
+      .pipe(
+        tap(() => {
+          console.log('Refreshing data...', intervalTime);
+          // Thêm logic refresh data ở đây
+        })
+      )
+      .subscribe();
   }
 
 
@@ -87,10 +113,11 @@ export class AppComponent implements OnInit {
     private vcsDialogService: VcsDialogService,
     private customToastService: CustomToastFromMaterialService,
     private customDialogService: CustomDialogService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private formBuilder: FormBuilder
   ) {
     this.fakeData$ = of([
-      { id: 1, name: 'Nguyễn Văn A', email: 'nguyenvana@example.com' },
+      { id: 1, name: 'Nguyễn Văn A', email: 'nguyenvana@example.commmmmmmmmmmmmmmmmmmmmmmmmmmmmmm' },
       { id: 2, name: 'Trần Thị B', email: 'tranthib@example.com' },
       { id: 3, name: 'Lê Văn C', email: 'levanc@example.com' },
       { id: 4, name: 'Phạm Thị D', email: 'phamthid@example.com' },
@@ -206,7 +233,8 @@ export class AppComponent implements OnInit {
     sorts: ['name,DESC', 'id,ASC'],
     page: null,
     size: null,
-    query: ''
+    query: '',
+    another: ['test', 'test2']
   };
 
   convertParamToQueryString(paramObj: any): string {
@@ -225,5 +253,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     const queryString = this.convertParamToQueryString(this.paramObj);
     console.log(queryString);
+    this.form = this.formBuilder.group({
+      inputControl: new FormControl('', [Validators.required])
+    });
   }
 }
