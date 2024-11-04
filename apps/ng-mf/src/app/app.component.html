@@ -21,6 +21,8 @@
   <vcs-pagination [totalPages]="10" [currentPage]="1"></vcs-pagination>
   <button (click)="openFileUploadDialog()">Mở Dialog Upload File</button>
 </div> -->
+<vcs-topbar></vcs-topbar>
+<custom-datetime-picker [typeOfSelect]="'rangePicker'"></custom-datetime-picker>
 <div style="display: flex; flex-direction: column; align-items: flex-start; margin: 100px;">
   <form [formGroup]="form">
     <vcs-text-field

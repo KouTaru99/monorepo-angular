@@ -3,27 +3,42 @@ import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideNzI18n, vi_VN } from 'ng-zorro-antd/i18n'; // Import locale
-import { registerLocaleData } from '@angular/common';
-import localeVi from '@angular/common/locales/vi';
+// import { registerLocaleData } from '@angular/common';
+// import localeVi from '@angular/common/locales/vi';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { provideToastr } from 'ngx-toastr';
-import { OWL_DATE_TIME_LOCALE, OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+// import { OWL_DATE_TIME_LOCALE, OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-registerLocaleData(localeVi); // Đăng ký locale data
+// registerLocaleData(localeVi); // Đăng ký locale data
 
-
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes),
     provideHttpClient(),
     provideAnimations(),
-    provideNzI18n(vi_VN),
     importProvidersFrom(NzModalModule),
     provideToastr(),
-    importProvidersFrom(OwlDateTimeModule),
-    importProvidersFrom(OwlNativeDateTimeModule),
-    {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
+    // importProvidersFrom(OwlDateTimeModule),
+    // importProvidersFrom(OwlNativeDateTimeModule),
+    // {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
+    importProvidersFrom(HttpClientModule),
+    importProvidersFrom(
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        },
+        defaultLanguage: 'vi'
+      })
+    )
   ],
 };

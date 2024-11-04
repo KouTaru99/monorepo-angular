@@ -1,0 +1,20 @@
+{
+  "common": {
+    "buttons": {
+      "save": "Lưu",
+      "cancel": "Hủy",
+      "close": "Đóng",
+      "edit": "Sửa",
+      "delete": "Xóa"
+    },
+    "validation": {
+      "required": "Trường này là bắt buộc",
+      "email": "Email không hợp lệ",
+      "minLength": "Tối thiểu {{min}} ký tự"
+    }
+  },
+  "datatable": {
+    "noData": "Không có dữ liệu",
+    "search": "Tìm kiếm dữ liệu"
+  }
+}

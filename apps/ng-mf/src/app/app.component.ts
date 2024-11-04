@@ -1,7 +1,7 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewContainerRef, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, VcsDialogService, CustomDatetimePickerComponent, CustomToastFromMaterialService, CustomDialogService, VcsSelectComponent, VcsPaginationComponent, VcsFileUploadComponent, VcsTextFieldComponent } from '@ng-mf/my-lib';
+import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, VcsDialogService, CustomDatetimePickerComponent, CustomToastFromMaterialService, CustomDialogService, VcsSelectComponent, VcsPaginationComponent, VcsFileUploadComponent, VcsTextFieldComponent, VcsTopbarComponent } from '@ng-mf/my-lib';
 import { Observable, of, Subscription, tap, interval } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -30,7 +30,8 @@ interface FakeData {
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    VcsTextFieldComponent
+    VcsTextFieldComponent,
+    VcsTopbarComponent
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -114,7 +115,7 @@ export class AppComponent implements OnInit {
     private customToastService: CustomToastFromMaterialService,
     private customDialogService: CustomDialogService,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
     this.fakeData$ = of([
       { id: 1, name: 'Nguyễn Văn A', email: 'nguyenvana@example.commmmmmmmmmmmmmmmmmmmmmmmmmmmmmm' },

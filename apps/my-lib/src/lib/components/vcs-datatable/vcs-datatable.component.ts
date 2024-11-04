@@ -9,6 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { VcsEllipsisDirective } from './ellipsis.directive';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface ColumnDef {
   key: string;
@@ -38,7 +39,8 @@ export interface Action {
     MatButtonModule,
     FormsModule,
     VcsEllipsisDirective,
-    MatTooltipModule
+    MatTooltipModule,
+    TranslateModule
   ]
 })
 export class VcsDatatableComponent implements OnInit {

@@ -36,3 +36,6 @@ export * from './lib/components/vcs-pagination/vcs-pagination.component';
 export * from './lib/components/vcs-file-upload/vcs-file-upload.component';
 
 export * from './lib/components/vcs-text-field/vcs-text-field.component';
+
+export * from './lib/components/language-switcher/language-switcher.component';
+export * from './lib/services/translation.service';

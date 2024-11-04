@@ -1,6 +1,6 @@
 <div>
   <mat-form-field *ngIf="searchable">
-    <input matInput [(ngModel)]="searchValue" (input)="handleSearch()" placeholder="Tìm kiếm">
+    <input matInput [(ngModel)]="searchValue" (input)="handleSearch()" [placeholder]="'datatable.search' | translate">
   </mat-form-field>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
@@ -48,4 +48,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;">
     </tr>
   </table>
+
+  <div *ngIf="!dataSource.data.length" class="no-data">
+    {{ 'datatable.noData' | translate }}
+  </div>
 </div>
