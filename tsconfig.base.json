@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ng-mf/my-lib": ["apps/my-lib/src/index.ts"]
+      "@ng-mf/my-lib": ["apps/my-lib/src/index.ts"],
+      "app-remote/Routes": [
+        "apps/app-remote/src/app/remote-entry/entry.routes.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

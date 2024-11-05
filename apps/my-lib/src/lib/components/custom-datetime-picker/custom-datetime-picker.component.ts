@@ -35,7 +35,7 @@ export class CustomDatetimePickerComponent implements OnInit {
   selectedDateRangeTo: Date | Date[] | null = null;
   selectedDateRangeFromTo: Date | Date[] | null | any = null;
   constructor(private dateTimeAdapter: DateTimeAdapter<Date>) {
-    this.dateTimeAdapter.setLocale('vi');
+    // this.dateTimeAdapter.setLocale('vi-VN');
   }
 
   ngOnInit() {
@@ -105,5 +105,19 @@ export class CustomDatetimePickerComponent implements OnInit {
   }
   onDateTimeChangeRangeTo(value: Date | Date[] | null) {
     console.log('Selected date range to:', value);
+  }
+
+  onBeforePickerOpen(event: any) {
+    console.log('onBeforePickerOpen');
+    this.dateTimeAdapter.setLocale('vi-VN');
+  }
+
+  onAfterPickerClose(event: any) {
+    console.log('onAfterPickerClose');
+    this.dateTimeAdapter.setLocale('vi-VN');
+  }
+
+  onTimeUpdate(event: any) {
+    console.log('onTimeUpdate', event);
   }
 }

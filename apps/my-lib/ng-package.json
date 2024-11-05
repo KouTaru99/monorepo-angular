@@ -3,5 +3,12 @@
   "dest": "../../dist/apps/my-lib",
   "lib": {
     "entryFile": "src/index.ts"
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "@angular/material",
+    "@angular/cdk"
+  ],
+  "assets": [
+    "./src/lib/styles/**/*.scss"
+  ]
 }

@@ -1,9 +1,23 @@
 import { withModuleFederation } from '@nx/angular/module-federation';
 import config from './module-federation.config';
 
-/**
- * DTS Plugin is disabled in Nx Workspaces as Nx already provides Typing support for Module Federation
- * The DTS Plugin can be enabled by setting dts: true
- * Learn more about the DTS Plugin here: https://module-federation.io/configure/dts.html
- */
-export default withModuleFederation(config, { dts: false });
+const baseConfig = {
+  ...config,
+  remotes: [
+    ['app-remote', process.env.REMOTE_URL || 'http://localhost:4201'] as [string, string]
+  ],
+  shared: (libraryName: string, defaultConfig: any) => {
+    if (libraryName === '@angular/core' ||
+        libraryName === '@angular/common' ||
+        libraryName === '@angular/router') {
+      return {
+        singleton: true,
+        strictVersion: true,
+        requiredVersion: '^18.0.0'
+      };
+    }
+    return defaultConfig;
+  }
+};
+
+export default withModuleFederation(baseConfig);

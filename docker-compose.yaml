@@ -1,0 +1,18 @@
+version: '3'
+services:
+  ng-mf:
+    image: sangkt99/angular-monorepos:latest
+    build:
+      context: .
+      args:
+        - REMOTE_URL=${REMOTE_URL:-http://localhost:8080/app-remote}
+    environment:
+      - REMOTE_URL=${REMOTE_URL:-http://localhost:8080/app-remote}
+    ports:
+      - "8080:80"
+
+# # Local development
+# docker-compose --env-file environments/.env.local up -d
+
+# Production
+# docker-compose --env-file environments/.env.prod up -d

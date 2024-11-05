@@ -1,7 +1,11 @@
-import { Route } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
+import { Route } from '@angular/router';
 
 export const appRoutes: Route[] = [
+  {
+    path: 'app-remote',
+    loadChildren: () => import('app-remote/Routes').then((m) => m.remoteRoutes),
+  },
   {
     path: 'dashboard',
     component: NxWelcomeComponent,
@@ -29,5 +33,10 @@ export const appRoutes: Route[] = [
   {
     path: 'settings/profile',
     component: NxWelcomeComponent,
+  },
+  {
+    path: '',
+    redirectTo: 'app-remote',
+    pathMatch: 'full',
   },
 ];

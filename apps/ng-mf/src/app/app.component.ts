@@ -1,7 +1,7 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewContainerRef, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, VcsDialogService, CustomDatetimePickerComponent, CustomToastFromMaterialService, CustomDialogService, VcsSelectComponent, VcsPaginationComponent, VcsFileUploadComponent, VcsTextFieldComponent, VcsTopbarComponent } from '@ng-mf/my-lib';
+import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, CustomDatetimePickerComponent, CustomDialogService, VcsSelectComponent, VcsPaginationComponent, VcsFileUploadComponent, VcsTextFieldComponent, VcsTopbarComponent } from '@ng-mf/my-lib';
 import { Observable, of, Subscription, tap, interval } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -111,8 +111,6 @@ export class AppComponent implements OnInit {
   constructor(
     private viewContainerRef: ViewContainerRef,
     private vcsToastService: VcsToastService,
-    private vcsDialogService: VcsDialogService,
-    private customToastService: CustomToastFromMaterialService,
     private customDialogService: CustomDialogService,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -138,42 +136,6 @@ export class AppComponent implements OnInit {
     console.log('Birthday changed:', event);
   }
 
-  openSimpleDialog() {
-    this.vcsDialogService.showDialog({
-      title: 'Thông báo đơn giản',
-      content: 'Đây là một thông báo đơn giản từ VcsDialogService.',
-      okText: 'Đồng ý',
-      cancelText: 'Hủy bỏ',
-      onOk: () => console.log('Người dùng đã đồng ý'),
-      onCancel: () => console.log('Người dùng đã hủy bỏ')
-    });
-  }
-
-  openCustomDialog() {
-    this.vcsDialogService.showDialog({
-      title: 'Dialog tùy chỉnh',
-      content: this.customDialogContent,
-      okText: 'Xác nhận',
-      cancelText: 'Đóng',
-      onOk: () => console.log('Người dùng đã xác nhận'),
-      onCancel: () => console.log('Người dùng đã đóng dialog')
-    });
-  }
-
-  openConfirmDialog() {
-    this.vcsDialogService.showConfirm({
-      title: 'Xác nhận hành động',
-      content: 'Bạn có chắc chắn muốn thực hiện hành động này không?',
-      okText: 'Có',
-      cancelText: 'Không',
-      onOk: () => console.log('Người dùng đã xác nhận hành động'),
-      onCancel: () => console.log('Người dùng đã hủy hành động')
-    });
-  }
-
-  openToast() {
-    this.customToastService.showSuccess('Thành công', 'Đây là một thông báo thành công', 'Thực hiện', () => console.log('Thực hiện hành động'));
-  }
 
   openConfirmDialog1() {
     this.customDialogService.confirm('Confirm Action', 'Are you sure you want to proceed?')

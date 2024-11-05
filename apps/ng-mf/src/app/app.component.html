@@ -1,47 +1,5 @@
-<!-- <div class="container" style="margin: 500px;">
-  <vcs-select
-    [options]="yourOptions"
-    [selected]="initialSelectedValue"
-    (selectedChange)="onSelectionChange($event)"
-    [label]="'Chọn Topping'"
-    [placeholder]="'Chọn Topping'"
-    [required]="true"
-    [multiple]="true"
-    >
-  </vcs-select>
-  <ng-template #customDialogContent>
-    <h3>Nội dung tùy chỉnh</h3>
-    <p>Đây là một ví dụ về nội dung dialog tùy chỉnh.</p>
-    <ul>
-      <li>Mục 1</li>
-      <li>Mục 2</li>
-      <li>Mục 3</li>
-    </ul>
-  </ng-template>
-  <vcs-pagination [totalPages]="10" [currentPage]="1"></vcs-pagination>
-  <button (click)="openFileUploadDialog()">Mở Dialog Upload File</button>
-</div> -->
-<vcs-topbar></vcs-topbar>
-<custom-datetime-picker [typeOfSelect]="'rangePicker'"></custom-datetime-picker>
-<div style="display: flex; flex-direction: column; align-items: flex-start; margin: 100px;">
-  <form [formGroup]="form">
-    <vcs-text-field
-      controlKey="inputControl"
-      [label]="'Nhập thông tin'"
-      [required]="true"
-      [errorMessage]="errorMessage"
-      >
-    </vcs-text-field>
-  </form>
-
-  <mat-form-field>
-    <mat-label>Select an option</mat-label>
-    <mat-select [(ngModel)]="selectedOption" (selectionChange)="handleRefresh()">
-      <mat-option value="null">Tắt làm mới dữ liệu</mat-option>
-      <mat-option value="1">Làm mới mỗi 1 giây</mat-option>
-      <mat-option value="3">Làm mới mỗi 3 giây</mat-option>
-    </mat-select>
-    </mat-form-field>
-</div>
-
-<vcs-datatable [data]="(fakeData$ | async) ?? []" [searchable]="true" [columns]="columns"></vcs-datatable>
+<ul class="remote-menu">
+  <li><a routerLink="/">Home</a></li>
+  <li><a routerLink="app-remote">AppRemote</a></li>
+</ul>
+<router-outlet></router-outlet>

@@ -1,39 +1,5 @@
-
-
-  @if (typeOfSelect === 'rangePicker') {
-    <input
-    [owlDateTime]="dt123"
-    [selectMode]="'rangeFrom'"
-    [value]="selectedDateRangeFromTo[0]"
-    (input)="formatDateFrom($event)"
-    >
-    <button [owlDateTimeTrigger]="dt123" >Open Range Picker Panel</button>
-    <owl-date-time #dt123 [showSecondsTimer]="true"></owl-date-time>
-
-    <input [owlDateTime]="dt1234"
-    [selectMode]="'rangeTo'"
-    [value]="selectedDateRangeFromTo[1]"
-    (input)="formatDateTo($event)"
-    >
-    <button [owlDateTimeTrigger]="dt1234" >Open Range Picker Panel</button>
-    <owl-date-time #dt1234 [showSecondsTimer]="true"></owl-date-time>
-
-  }@else {
-    <label>
-      Date Time Range:
-      <input [owlDateTime]="dt11"
-             [selectMode]="'rangeFrom'"
-             [(ngModel)]="selectedDate"
-             (ngModelChange)="onDateTimeChange($event)">
-             <button [owlDateTimeTrigger]="dt11" >Open Picker Panel</button>
-      <owl-date-time #dt11 [showSecondsTimer]="true"></owl-date-time>
-    </label>
-  }
-  <!-- <label>
-    Time
-    <input [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4"
-           formControlName="time"
-           (dateTimeChange)="dateTimeForm.get('time')?.setValue($event.value ? formatDate($event.value) : '')">
-    <owl-date-time [pickerType]="'timer'" #dt4 [showSecondsTimer]="true" [parseInput]="parseDate" [formatInput]="formatDate"></owl-date-time>
-  </label> -->
-
+<label>
+  Date Time Range:
+  <input style="width: 100%;" [owlDateTimeTrigger]="dt10" [owlDateTime]="dt10" [selectMode]="'range'" (timeUpdate)="onTimeUpdate($event)">
+  <owl-date-time [showSecondsTimer]="true" #dt10 (beforePickerOpen)="onBeforePickerOpen($event)" (afterPickerClosed)="onAfterPickerClose($event)"></owl-date-time>
+</label>
