@@ -22,3 +22,6 @@ services:
       timeout: 3s
       retries: 3
       start_period: 40s
+# REMOTE_URL=http://10.255.250.186 docker-compose -f docker-compose.prod.yml up --build
+# args:
+#   - REMOTE_URL=http://10.255.250.186  # Set trực tiếp URL ở đây
