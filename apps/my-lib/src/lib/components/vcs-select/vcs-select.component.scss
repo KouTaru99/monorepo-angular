@@ -1,0 +1,18 @@
+.trigger-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.selected-item {
+  white-space: nowrap;
+  margin-right: 4px;
+  display: inline-block;
+  flex-shrink: 0;
+
+  &:not(:last-child):after {
+    content: ',';
+  }
+}

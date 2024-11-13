@@ -20,6 +20,11 @@
           {
             "glob": "**/*",
             "input": "apps/app-remote/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/my-lib/src/lib/assets",
+            "output": "assets"
           }
         ],
         "styles": ["apps/app-remote/src/styles.scss"],
