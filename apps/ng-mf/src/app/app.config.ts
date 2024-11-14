@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -21,14 +21,11 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(appRoutes),
+    provideRouter(appRoutes, withHashLocation()),
     provideHttpClient(),
     provideAnimations(),
     importProvidersFrom(NzModalModule),
     provideToastr(),
-    // importProvidersFrom(OwlDateTimeModule),
-    // importProvidersFrom(OwlNativeDateTimeModule),
-    // {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
     importProvidersFrom(HttpClientModule),
     importProvidersFrom(
       TranslateModule.forRoot({
