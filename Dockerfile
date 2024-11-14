@@ -26,10 +26,16 @@ ENV AUTH_URL=$AUTH_URL
 RUN nx build ng-mf --prod --skip-nx-cache && \
     nx build app-remote --prod --skip-nx-cache
 
-# Production stage - sử dụng nginx alpine cho nhẹ
+# Production stage
 FROM nginx:alpine as production
-COPY --from=build /app/dist/apps/ng-mf /usr/share/nginx/html
-COPY --from=build /app/dist/apps/app-remote /usr/share/nginx/html/app-remote
+
+# Remove default nginx static files
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy toàn bộ thư mục apps
+COPY --from=build /app/dist/apps /usr/share/nginx/html
+
+# Copy nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
