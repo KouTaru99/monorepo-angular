@@ -35,6 +35,10 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy toàn bộ thư mục apps
 COPY --from=build /app/dist/apps /usr/share/nginx/html
 
+# Set permissions for nginx
+RUN chown -R nginx:nginx /usr/share/nginx/html && \
+    chmod -R 755 /usr/share/nginx/html
+
 # Copy nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
