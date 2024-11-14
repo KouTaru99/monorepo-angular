@@ -33,14 +33,24 @@ FROM nginx:alpine as production
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy toàn bộ thư mục apps
-COPY --from=build /app/dist/apps /usr/share/nginx/html
+COPY --from=build /app/dist/apps/ng-mf /usr/share/nginx/html
+COPY --from=build /app/dist/apps/app-remote /usr/share/nginx/html/app-remote
 
-# Set permissions for nginx
-RUN chown -R nginx:nginx /usr/share/nginx/html && \
-    chmod -R 755 /usr/share/nginx/html
+# Fix permissions
+RUN chmod -R 755 /usr/share/nginx/html && \
+    chown -R nginx:nginx /usr/share/nginx/html && \
+    chmod 644 /usr/share/nginx/html/*.* && \
+    chmod 644 /usr/share/nginx/html/app-remote/*.*
 
 # Copy nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Create nginx user if it doesn't exist
+RUN adduser -D -g 'www' www && \
+    chown -R www:www /usr/share/nginx/html
+
+USER nginx
+
 EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]
