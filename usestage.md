@@ -129,7 +129,34 @@ Library cung cấp các components dùng chung:
 - Kiểm tra cấu hình webpack
 - Rà soát độ ưu tiên của CSS
 
-## 8. Đóng góp code
+## 8. Một vài đề xuất khác cho devs
+### Trong my-lib nên để:
+- Các services cơ bản dùng chung
+- Các interceptors chung
+- Các models/interfaces chung
+- Các utilities functions chung
+- Các guards chung
+
+### Trong app-shell nên để:
+- Cấu hình routing chính
+- Providers cho toàn bộ ứng dụng
+- Layout chung
+- State management (nếu có)
+
+### Trong app-remote nên để:
+- Các services đặc thù cho module đó
+- Các components riêng
+- Routing của module đó
+- State management cục bộ (nếu cần)
+
+### Lợi ích
+- Tránh duplicate code
+- Dễ maintain và update
+- Giảm bundle size
+- Tăng tính tái sử dụng
+- Dễ dàng thêm mới remote apps
+
+## 9. Đóng góp code
 1. Fork repository về tài khoản cá nhân
 2. Tạo nhánh tính năng mới
 3. Gửi yêu cầu pull request
