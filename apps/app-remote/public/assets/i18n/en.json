@@ -1,0 +1,10 @@
+{
+  "app-remote": {
+    "title": "Remote Application",
+    "description": "This is a remote application in the micro frontend system",
+    "select": {
+      "label": "Select options",
+      "placeholder": "Please select"
+    }
+  }
+}

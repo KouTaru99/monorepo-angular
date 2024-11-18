@@ -1,16 +1,17 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { appRoutes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 // import { registerLocaleData } from '@angular/common';
 // import localeVi from '@angular/common/locales/vi';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { provideToastr } from 'ngx-toastr';
 // import { OWL_DATE_TIME_LOCALE, OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LanguageInterceptor, AuthInterceptor } from '@ng-mf/my-lib';
 
 // registerLocaleData(localeVi); // Đăng ký locale data
 
@@ -22,7 +23,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes, withHashLocation()),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptorsFromDi()
+    ),
     provideAnimations(),
     importProvidersFrom(NzModalModule),
     provideToastr(),
@@ -36,6 +39,16 @@ export const appConfig: ApplicationConfig = {
         },
         defaultLanguage: 'vi'
       })
-    )
+    ),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LanguageInterceptor,
+      multi: true
+    }
   ],
 };

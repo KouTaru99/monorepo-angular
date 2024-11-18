@@ -1,0 +1,10 @@
+{
+  "app-remote": {
+    "title": "Ứng dụng Remote",
+    "description": "Đây là một ứng dụng remote trong hệ thống micro frontend",
+    "select": {
+      "label": "Chọn tùy chọn",
+      "placeholder": "Vui lòng chọn"
+    }
+  }
+}

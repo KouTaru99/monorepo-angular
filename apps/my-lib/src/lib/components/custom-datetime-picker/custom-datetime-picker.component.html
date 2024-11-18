@@ -1,5 +1,38 @@
 <label>
-  Date Time Range:
-  <input style="width: 100%;" [owlDateTimeTrigger]="dt10" [owlDateTime]="dt10" [selectMode]="'range'" (timeUpdate)="onTimeUpdate($event)">
-  <owl-date-time [showSecondsTimer]="true" #dt10 (beforePickerOpen)="onBeforePickerOpen($event)" (afterPickerClosed)="onAfterPickerClose($event)"></owl-date-time>
+  Thời gian cập nhật cuối:
+  <div class="datetime-range-wrapper">
+    <!-- From datetime -->
+    <div class="datetime-input-group">
+      <input type="text" maxlength="2" class="time-input" #hoursFrom placeholder="00">
+      <span>:</span>
+      <input type="text" maxlength="2" class="time-input" #minutesFrom placeholder="00">
+      <span>:</span>
+      <input type="text" maxlength="2" class="time-input" #secondsFrom placeholder="00">
+      <span class="separator"></span>
+      <input type="text" maxlength="2" class="date-input" #dateFrom placeholder="dd">
+      <span>/</span>
+      <input type="text" maxlength="2" class="date-input" #monthFrom placeholder="mm">
+      <span>/</span>
+      <input type="text" maxlength="4" class="date-input year-input" #yearFrom placeholder="yyyy">
+    </div>
+
+    <span class="range-separator">→</span>
+
+    <!-- To datetime -->
+    <div class="datetime-input-group">
+      <input type="text" maxlength="2" class="time-input" #hoursTo placeholder="00">
+      <span>:</span>
+      <input type="text" maxlength="2" class="time-input" #minutesTo placeholder="00">
+      <span>:</span>
+      <input type="text" maxlength="2" class="time-input" #secondsTo placeholder="00">
+      <span class="separator"></span>
+      <input type="text" maxlength="2" class="date-input" #dateTo placeholder="dd">
+      <span>/</span>
+      <input type="text" maxlength="2" class="date-input" #monthTo placeholder="mm">
+      <span>/</span>
+      <input type="text" maxlength="4" class="date-input year-input" #yearTo placeholder="yyyy">
+    </div>
+
+    <span class="calendar-icon">📅</span>
+  </div>
 </label>

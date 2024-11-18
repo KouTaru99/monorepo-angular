@@ -38,4 +38,15 @@ export * from './lib/components/vcs-file-upload/vcs-file-upload.component';
 export * from './lib/components/vcs-text-field/vcs-text-field.component';
 
 export * from './lib/components/language-switcher/language-switcher.component';
+
 export * from './lib/services/translation.service';
+
+export * from './lib/interceptors/language.interceptor';
+
+export * from './lib/guards/language.guard';
+
+export * from './lib/guards/auth.guard';
+
+export * from './lib/guards/role.guard';
+
+export * from './lib/interceptors/auth.interceptor';
