@@ -1,38 +1,39 @@
-<label>
-  Thời gian cập nhật cuối:
-  <div class="datetime-range-wrapper">
-    <!-- From datetime -->
-    <div class="datetime-input-group">
-      <input type="text" maxlength="2" class="time-input" #hoursFrom placeholder="00">
-      <span>:</span>
-      <input type="text" maxlength="2" class="time-input" #minutesFrom placeholder="00">
-      <span>:</span>
-      <input type="text" maxlength="2" class="time-input" #secondsFrom placeholder="00">
-      <span class="separator"></span>
-      <input type="text" maxlength="2" class="date-input" #dateFrom placeholder="dd">
-      <span>/</span>
-      <input type="text" maxlength="2" class="date-input" #monthFrom placeholder="mm">
-      <span>/</span>
-      <input type="text" maxlength="4" class="date-input year-input" #yearFrom placeholder="yyyy">
-    </div>
+<form [formGroup]="dateRangeForm">
+  <input
+    class="datetime-hidden-input"
+    formControlName="date"
+    [owlDateTime]="dt1"
+    [min]="minDate"
+    [max]="maxDate"
+    [selectMode]="'range'"
+    (dateTimeChange)="onDateTimePickerChange($event)"
+  >
 
-    <span class="range-separator">→</span>
+  <div class="datetime-inputs-wrapper">
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        type="text"
+        mask="00:00:00 00/00/0000 - 00:00:00 00/00/0000"
+        [showMaskTyped]="true"
+        [dropSpecialCharacters]="false"
+        [validation]="true"
+        placeholder="hh:mm:ss dd/mm/yyyy - hh:mm:ss dd/mm/yyyy"
+        formControlName="dateTime"
+      >
+      <mat-error *ngIf="dateRangeForm.errors?.['required']">
+        Vui lòng nhập đầy đủ thời gian bắt đầu và kết thúc
+      </mat-error>
+      <mat-error *ngIf="dateRangeForm.errors?.['invalidFormat']">
+        Định dạng thời gian không hợp lệ
+      </mat-error>
+      <mat-error *ngIf="dateRangeForm.errors?.['invalidRange']">
+        Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc
+      </mat-error>
+    </mat-form-field>
 
-    <!-- To datetime -->
-    <div class="datetime-input-group">
-      <input type="text" maxlength="2" class="time-input" #hoursTo placeholder="00">
-      <span>:</span>
-      <input type="text" maxlength="2" class="time-input" #minutesTo placeholder="00">
-      <span>:</span>
-      <input type="text" maxlength="2" class="time-input" #secondsTo placeholder="00">
-      <span class="separator"></span>
-      <input type="text" maxlength="2" class="date-input" #dateTo placeholder="dd">
-      <span>/</span>
-      <input type="text" maxlength="2" class="date-input" #monthTo placeholder="mm">
-      <span>/</span>
-      <input type="text" maxlength="4" class="date-input year-input" #yearTo placeholder="yyyy">
-    </div>
-
-    <span class="calendar-icon">📅</span>
+    <span class="calendar-icon" [owlDateTimeTrigger]="dt1">📅</span>
   </div>
-</label>
+</form>
+<owl-date-time #dt1 [showSecondsTimer]="true"></owl-date-time>
+

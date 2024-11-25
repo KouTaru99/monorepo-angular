@@ -4,7 +4,12 @@
 </ul>
 
 <div class="container">
-  <custom-datetime-picker></custom-datetime-picker>
+  <custom-datetime-picker
+    [dateTimeControl]="dateTimeControl"
+    [minDate]="minDate"
+    [maxDate]="maxDate"
+    (dateRangeChange)="onDateRangeChange($event)"
+  ></custom-datetime-picker>
 </div>
 
 <router-outlet></router-outlet>

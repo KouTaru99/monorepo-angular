@@ -1,7 +1,7 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewContainerRef, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, CustomDatetimePickerComponent, CustomDialogService, VcsSelectComponent, VcsPaginationComponent, VcsFileUploadComponent, VcsTextFieldComponent, VcsTopbarComponent } from '@ng-mf/my-lib';
+import { ColumnDef, VcsDatatableComponent, VcsSidenavComponent, VcsDatePickerComponent, VcsToastComponent, VcsToastService, CustomDatetimePickerComponent, CustomDialogService, VcsSelectComponent, VcsPaginationComponent, VcsFileUploadComponent, VcsTextFieldComponent, VcsTopbarComponent, DateTimeRange } from '@ng-mf/my-lib';
 import { Observable, of, Subscription, tap, interval } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -39,6 +39,22 @@ interface FakeData {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
+  dateTimeControl = new FormControl();
+  minDate = new Date(2020, 0, 1); // 01/01/2020
+  maxDate = new Date(2025, 11, 31); // 31/12/2025
+
+  onDateRangeChange(range: DateTimeRange) {
+    if (range.fromDate && range.toDate) {
+      console.log('From:', range.fromDate);
+      console.log('To:', range.toDate);
+    } else {
+      console.log('Invalid date range');
+    }
+  }
+
+
+
+
   form!: FormGroup;
   selectedOption = '';
   errorMessage = 'trường bắt buộc';
