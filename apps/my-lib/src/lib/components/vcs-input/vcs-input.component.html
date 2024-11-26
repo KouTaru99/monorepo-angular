@@ -1,0 +1,16 @@
+<div class="vcs-form-control" *ngIf="control">
+  <label [for]="id" [class.required]="isRequired">{{ label }}</label>
+  <input
+    [id]="id"
+    [required]="isRequired"
+    [type]="type"
+    [formControl]="control"
+    [placeholder]=" "
+  />
+
+  <lib-validation-errors
+    [customErrorMessages]="customErrorMessages"
+    [errors]="control.errors"
+  >
+  </lib-validation-errors>
+</div>

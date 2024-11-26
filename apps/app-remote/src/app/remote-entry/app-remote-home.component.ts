@@ -1,15 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VcsSelectComponent } from '@ng-mf/my-lib';
+import { LibSelectComponent, LibInputComponent } from '@ng-mf/my-lib';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-remote-home',
   standalone: true,
-  imports: [CommonModule, VcsSelectComponent],
+  imports: [CommonModule, LibSelectComponent, LibInputComponent, ReactiveFormsModule],
   templateUrl: './app-remote-home.component.html',
   styleUrl: './app-remote-home.component.scss',
 })
-export class AppRemoteHomeComponent {
+export class AppRemoteHomeComponent implements OnInit {
+  errorMessages = { required: 'The name field is required' };
+
+  formGroup = new FormGroup({
+    name: new FormControl('', Validators.required),
+    age: new FormControl(null, Validators.required),
+  });
+
   options = [
     { key: '1', value: 'Option 1 123123 213123 123123 123123' },
     { key: '2', value: 'Option 2' },
@@ -18,6 +27,10 @@ export class AppRemoteHomeComponent {
     { key: '5', value: 'Option 5' },
     { key: '6', value: 'Option 6' },
   ];
+
+  ngOnInit(): void {
+    // this.formGroup.controls.age.disable();
+  }
 
   onChange(event: any) {
     console.log(event);

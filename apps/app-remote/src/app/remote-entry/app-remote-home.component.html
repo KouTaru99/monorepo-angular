@@ -1,8 +1,17 @@
-<!-- <vcs-select
-  [options]="options"
-  (change)="onChange($event)"
-  [label]="'Select'"
-  [placeholder]="'Select'"
-  [required]="true"
-  [multiple]="true"
-></vcs-select> -->
+<form [formGroup]="formGroup">
+  <lib-input
+    [customErrorMessages]="errorMessages"
+    label="Hello"
+    inputId="myId"
+    formControlName="name"
+  ></lib-input>
+  <lib-select
+    [customErrorMessages]="errorMessages"
+    label="Hello"
+    selectId="myId"
+    [options]="['1', '2', '3']"
+    formControlName="age"
+  ></lib-select>
+</form>
+
+{{ formGroup.value | json }}

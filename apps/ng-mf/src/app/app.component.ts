@@ -231,7 +231,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const queryString = this.convertParamToQueryString(this.paramObj);
-    console.log(queryString);
+    // console.log(queryString);
     this.form = this.formBuilder.group({
       inputControl: new FormControl('', [Validators.required])
     });

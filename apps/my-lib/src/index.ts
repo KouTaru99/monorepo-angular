@@ -50,3 +50,9 @@ export * from './lib/guards/auth.guard';
 export * from './lib/guards/role.guard';
 
 export * from './lib/interceptors/auth.interceptor';
+
+export * from './lib/components/vcs-input/vcs-input.component';
+
+export * from './lib/components/lib-select/lib-select.component';
+
+export * from './lib/components/validation-errors/validation-errors.component';

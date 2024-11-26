@@ -1,0 +1,38 @@
+.vcs-form-control {
+  position: relative;
+  margin-bottom: 5px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+
+    &.required::after {
+      content: "*";
+      color: #ff0000;
+      margin-left: 4px;
+    }
+  }
+
+  input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+
+    &:focus:not(.ng-invalid.ng-touched) {
+      border-color: #0066ff;
+      box-shadow: 0 0 0 1px #0066ff;
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: #ff0000;
+      box-shadow: none;
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+  }
+}
