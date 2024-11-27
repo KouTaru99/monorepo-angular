@@ -1,19 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Input, Inject, Injector, forwardRef, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-import { FormControl, ReactiveFormsModule, FormsModule, FormGroup, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { OWL_DATE_TIME_LOCALE, OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule, DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { LibInputComponent } from '../vcs-input/vcs-input.component';
+import { distinctUntilChanged } from 'rxjs';
+import { filter } from 'rxjs';
+import { ControlValueAccessorDirective } from '../../directives/control-value-accessor.directive';
+import { DATE_TIME_PICKER_TYPE_FORMATS } from './date';
+import { DateTimePickerType } from './date';
+import { MY_NATIVE_FORMATS } from './date';
 
-const MY_NATIVE_FORMATS = {
-  fullPickerInput: {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false},
-  datePickerInput: {year: 'numeric', month: 'numeric', day: 'numeric'},
-  timePickerInput: {hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false},
-  monthYearLabel: {year: 'numeric', month: 'short'},
-  dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
-  monthYearA11yLabel: {year: 'numeric', month: 'long'},
-};
 
 export interface DateTimeRange {
   fromDate: Date | null;
@@ -27,126 +25,89 @@ export interface DateTimeRange {
   standalone: true,
   imports: [
     CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     FormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    LibInputComponent,
   ],
   providers: [
-    provideNgxMask(),
     { provide: OWL_DATE_TIME_LOCALE, useValue: 'vi' },
     { provide: OWL_DATE_TIME_FORMATS, useValue: MY_NATIVE_FORMATS },
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CustomDatetimePickerComponent),
+      multi: true,
+    },
   ]
 })
-export class CustomDatetimePickerComponent implements OnInit, OnDestroy {
-  @Input() dateTimeControl: FormControl = new FormControl();
+export class CustomDatetimePickerComponent<T> extends ControlValueAccessorDirective<T> {
+  @Input() type: DateTimePickerType = DateTimePickerType.DATE_SINGLE;
   @Input() minDate?: Date;
   @Input() maxDate?: Date;
-  @Output() dateRangeChange = new EventEmitter<DateTimeRange>();
-
-  dateRangeForm!: FormGroup;
+  @Output() dateValChange = new EventEmitter<any>();
+  dateVal:any = null;
+  format = DATE_TIME_PICKER_TYPE_FORMATS[this.type];
+  dateTimePickerType = DateTimePickerType;
 
   constructor(
     private datetimeAdapter: DateTimeAdapter<Date>,
-    private fb: FormBuilder
+    @Inject(Injector) injector: Injector
   ) {
+    super(injector);
     this.datetimeAdapter.setLocale('vi');
   }
 
-  ngOnInit() {
-    this.dateRangeForm = this.fb.group({
-      date: [null],
-      dateTime: this.dateTimeControl
-    });
-
-    // Subscribe to dateTime changes to sync with date picker
-    this.dateRangeForm.get('dateTime')?.valueChanges.subscribe(value => {
+  override ngOnInit() {
+    super.ngOnInit();
+    this.control?.valueChanges.pipe(
+      distinctUntilChanged(),
+      filter(value => !!value)
+    ).subscribe(value => {
       if (value) {
-        const [fromPart, toPart] = value.split(' - ');
-        const fromDate = this.parseDateTimeString(fromPart);
-        const toDate = this.parseDateTimeString(toPart);
-
-        if (fromDate && toDate) {
-          this.dateRangeForm.patchValue({
-            date: [fromDate, toDate]
-          }, { emitEvent: false });
+        if (this.type === DateTimePickerType.DATE_RANGE || this.type === DateTimePickerType.DATE_TIME_RANGE) {
+          const [fromPart, toPart] = value.split(' - ');
+          const fromDate = this.parseDateTimeString(fromPart);
+          const toDate = this.parseDateTimeString(toPart);
+          this.dateVal = [fromDate || null, toDate || null]
+        } else {
+          const date = this.parseDateTimeString(value);
+          this.dateVal = date || null;
         }
       }
-    });
-
-    // Subscribe to date changes to emit values
-    this.dateRangeForm.get('date')?.valueChanges.subscribe(value => {
-      if (value && value.length === 2) {
-        this.dateRangeChange.emit({
-          fromDate: value[0],
-          toDate: value[1]
-        });
-      }
+      this.dateValChange.emit(this.dateVal);
     });
   }
 
   onDateTimePickerChange(event: any) {
-    if (event && event.value.length === 2) {
-      const [fromDate, toDate] = event.value;
-      const formattedDateTime = `${this.formatDate(fromDate)} - ${this.formatDate(toDate)}`;
-      this.dateRangeForm.patchValue({
-        date: [fromDate, toDate],
-        dateTime: formattedDateTime
-      });
+    console.log(event.value);
+    if (event.value || event.value.length) {
+      if (this.type === DateTimePickerType.DATE_RANGE || this.type === DateTimePickerType.DATE_TIME_RANGE) {
+        const [fromDate, toDate] = event.value;
+        const formattedDateTime = `${this.formatDate(fromDate)} - ${this.formatDate(toDate)}`;
+        this.control?.patchValue(formattedDateTime, {emitEvent: false});
+      } else {
+        this.control?.patchValue(this.formatDate(event.value), {emitEvent: false});
+      }
     }
   }
 
-  ngOnDestroy() {
-    // Cleanup subscriptions if needed
-  }
-
   private formatDate(date: Date): string {
+    const nativeFormat:any = this.type.includes('time') ? MY_NATIVE_FORMATS.fullPickerInput : MY_NATIVE_FORMATS.datePickerInput;
     if (!date) return '';
-    const dateString = date.toLocaleString('vi-VN', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false
-    });
+    const dateString = date.toLocaleString('vi-VN', nativeFormat);
     return dateString;
   }
 
   private parseDateTimeString(value: string): Date | null {
-    if (!value || value.length < 19) return null;
-
     try {
-      const [time, date] = value.trim().split(' ');
-      if (!time || !date) return null;
-
-      const [hours, minutes, seconds] = time.split(':').map(Number);
-      const [day, month, year] = date.split('/').map(Number);
-
-      // Validate time format
-      if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59 ||
-          seconds < 0 || seconds > 59) {
-        return null;
-      }
-
-      // Validate date format
-      if (day < 1 || day > 31 || month < 1 || month > 12) {
-        return null;
-      }
-
-      const result = new Date(year, month - 1, day, hours, minutes, seconds);
-
-      // Check if date is valid (e.g., 31/04/2024 is invalid)
-      if (result.getMonth() !== month - 1) {
-        return null;
-      }
-
-      return result;
+      const [datePart, timePart] = this.type.includes('time') ? value.trim().split(' ') : [value.trim(), ''];
+      const [day, month, year] = datePart.split('/').map(Number);
+      const [hours, minutes, seconds] = timePart ? timePart.split(':').map(Number) : [0, 0, 0];
+      const result = this.type.includes('time') ? new Date(year, month - 1, day, hours, minutes, seconds) : new Date(year, month - 1, day );
+      return result.getMonth() === month - 1 ? result : null;
     } catch {
       return null;
     }

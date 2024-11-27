@@ -1,39 +1,29 @@
-<form [formGroup]="dateRangeForm">
-  <input
-    class="datetime-hidden-input"
-    formControlName="date"
-    [owlDateTime]="dt1"
-    [min]="minDate"
-    [max]="maxDate"
-    [selectMode]="'range'"
-    (dateTimeChange)="onDateTimePickerChange($event)"
-  >
-
+<input
+class="datetime-hidden-input"
+[owlDateTime]="dt1"
+[min]="minDate"
+[max]="maxDate"
+[selectMode]="type === dateTimePickerType.DATE_RANGE || type === dateTimePickerType.DATE_TIME_RANGE ? 'range' : 'single'"
+(dateTimeChange)="onDateTimePickerChange($event)"
+[(ngModel)]="dateVal"
+>
   <div class="datetime-inputs-wrapper">
-    <mat-form-field appearance="outline">
-      <input
-        matInput
-        type="text"
-        mask="00:00:00 00/00/0000 - 00:00:00 00/00/0000"
-        [showMaskTyped]="true"
-        [dropSpecialCharacters]="false"
-        [validation]="true"
-        placeholder="hh:mm:ss dd/mm/yyyy - hh:mm:ss dd/mm/yyyy"
-        formControlName="dateTime"
-      >
-      <mat-error *ngIf="dateRangeForm.errors?.['required']">
-        Vui lòng nhập đầy đủ thời gian bắt đầu và kết thúc
-      </mat-error>
-      <mat-error *ngIf="dateRangeForm.errors?.['invalidFormat']">
-        Định dạng thời gian không hợp lệ
-      </mat-error>
-      <mat-error *ngIf="dateRangeForm.errors?.['invalidRange']">
-        Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc
-      </mat-error>
-    </mat-form-field>
+    <lib-input
+      style="width: 100%;"
+      [formControl]="control!"
+      [type]="'text'"
+      [label]="'Thời gian'"
+      [mask]="format"
+      [showMaskTyped]="true"
+      [dropSpecialCharacters]="false"
+      [validation]="true"
+      [leadZeroDateTime]="true"
+      placeholder="hh:mm:ss dd/mm/yyyy - hh:mm:ss dd/mm/yyyy"
+    >
+    </lib-input>
 
     <span class="calendar-icon" [owlDateTimeTrigger]="dt1">📅</span>
   </div>
-</form>
-<owl-date-time #dt1 [showSecondsTimer]="true"></owl-date-time>
+<owl-date-time #dt1 [pickerType]="type === dateTimePickerType.DATE_TIME_SINGLE || type === dateTimePickerType.DATE_TIME_RANGE ? 'both' : 'calendar'" [showSecondsTimer]="true"></owl-date-time>
+<p>{{control!.value | json}}</p>
 

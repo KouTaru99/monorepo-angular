@@ -4,6 +4,8 @@
     label="Hello"
     inputId="myId"
     formControlName="name"
+    (inputValChange)="onInputValChange($event)"
+
   ></lib-input>
   <lib-select
     [customErrorMessages]="errorMessages"
@@ -12,6 +14,12 @@
     [options]="['1', '2', '3']"
     formControlName="age"
   ></lib-select>
+
+  <custom-datetime-picker
+    formControlName="dateTime"
+    (dateValChange)="onDateValChange($event)"
+  >
+  </custom-datetime-picker>
 </form>
 
 {{ formGroup.value | json }}

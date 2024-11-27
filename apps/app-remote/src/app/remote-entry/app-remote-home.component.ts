@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { LibSelectComponent, LibInputComponent } from '@ng-mf/my-lib';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { CustomDatetimePickerComponent } from "../../../../my-lib/src/lib/components/custom-datetime-picker/custom-datetime-picker.component";
 
 @Component({
   selector: 'app-remote-home',
   standalone: true,
-  imports: [CommonModule, LibSelectComponent, LibInputComponent, ReactiveFormsModule],
+  imports: [CommonModule, LibSelectComponent, LibInputComponent, ReactiveFormsModule, CustomDatetimePickerComponent],
   templateUrl: './app-remote-home.component.html',
   styleUrl: './app-remote-home.component.scss',
 })
@@ -17,6 +18,7 @@ export class AppRemoteHomeComponent implements OnInit {
   formGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     age: new FormControl(null, Validators.required),
+    dateTime: new FormControl(null, Validators.required),
   });
 
   options = [
@@ -33,6 +35,14 @@ export class AppRemoteHomeComponent implements OnInit {
   }
 
   onChange(event: any) {
+    console.log(event);
+  }
+
+  onInputValChange(event: any) {
+    console.log(event);
+  }
+
+  onDateValChange(event: any) {
     console.log(event);
   }
 }

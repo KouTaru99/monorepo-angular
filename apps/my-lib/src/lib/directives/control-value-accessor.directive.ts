@@ -8,7 +8,7 @@ import {
   FormGroupDirective,
   FormControlDirective,
 } from '@angular/forms';
-import { Subject, takeUntil, startWith, distinctUntilChanged, tap } from 'rxjs';
+import { Subject, distinctUntilChanged } from 'rxjs';
 
 @Directive({
   selector: '[libControlValueAccessor]',
@@ -19,6 +19,7 @@ export class ControlValueAccessorDirective<T>
 {
   control: FormControl | undefined;
   isRequired = false;
+  private _value: T | null = null;
 
   private _isDisabled = false;
   private _destroy$ = new Subject<void>();
@@ -52,22 +53,21 @@ export class ControlValueAccessorDirective<T>
   }
 
   writeValue(value: T): void {
-    if (this.control) {
-      this.control.setValue(value);
-    } else {
-      this.control = new FormControl(value);
+    this._value = value;
+    if (this.control && value !== this.control.value) {
+      this.control.patchValue(value, { emitEvent: false });
     }
   }
 
   registerOnChange(fn: (val: T | null) => T): void {
-    this.control?.valueChanges
-      .pipe(
-        takeUntil(this._destroy$),
-        startWith(this.control.value),
-        distinctUntilChanged(),
-        tap((val) => fn(val))
-      )
-      .subscribe(() => this.control?.markAsUntouched());
+    if (this.control) {
+      this.control.valueChanges
+        .pipe(distinctUntilChanged())
+        .subscribe(value => {
+          this._value = value;
+          fn(value);
+        });
+    }
   }
 
   registerOnTouched(fn: () => T): void {
@@ -76,5 +76,12 @@ export class ControlValueAccessorDirective<T>
 
   setDisabledState?(isDisabled: boolean): void {
     this._isDisabled = isDisabled;
+    if (this.control) {
+      if (isDisabled && !this.control.disabled) {
+        this.control.disable({ emitEvent: false });
+      } else if (!isDisabled && this.control.disabled) {
+        this.control.enable({ emitEvent: false });
+      }
+    }
   }
 }
