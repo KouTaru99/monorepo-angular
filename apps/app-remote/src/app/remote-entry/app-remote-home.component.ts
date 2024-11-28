@@ -1,14 +1,13 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LibSelectComponent, LibInputComponent } from '@ng-mf/my-lib';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { LibSelectComponent, LibInputComponent, VcsSelectComponent, CustomDatetimePickerComponent } from '@ng-mf/my-lib';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { CustomDatetimePickerComponent } from "../../../../my-lib/src/lib/components/custom-datetime-picker/custom-datetime-picker.component";
 
 @Component({
   selector: 'app-remote-home',
   standalone: true,
-  imports: [CommonModule, LibSelectComponent, LibInputComponent, ReactiveFormsModule, CustomDatetimePickerComponent],
+  imports: [CommonModule, LibSelectComponent, LibInputComponent, ReactiveFormsModule, CustomDatetimePickerComponent, VcsSelectComponent],
   templateUrl: './app-remote-home.component.html',
   styleUrl: './app-remote-home.component.scss',
 })
@@ -17,7 +16,7 @@ export class AppRemoteHomeComponent implements OnInit {
 
   formGroup = new FormGroup({
     name: new FormControl('', Validators.required),
-    age: new FormControl(null, Validators.required),
+    age: new FormControl([ { "key": "1", "value": "Option 1 123123 213123 123123 123123" }, { "key": "2", "value": "Option 2" }, { "key": "3", "value": "Option 3 123123123123" }, { "key": "4", "value": "Option 4" }, { "key": "5", "value": "Option 5" } ], Validators.required),
     dateTime: new FormControl(null, Validators.required),
   });
 

@@ -97,7 +97,7 @@ export class CustomDatetimePickerComponent<T> extends ControlValueAccessorDirect
   private formatDate(date: Date): string {
     const nativeFormat:any = this.type.includes('time') ? MY_NATIVE_FORMATS.fullPickerInput : MY_NATIVE_FORMATS.datePickerInput;
     if (!date) return '';
-    const dateString = date.toLocaleString('vi-VN', nativeFormat);
+    const dateString = date.toLocaleString('vi', nativeFormat);
     return dateString;
   }
 

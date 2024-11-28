@@ -8,18 +8,24 @@
 
   ></lib-input>
   <lib-select
-    [customErrorMessages]="errorMessages"
     label="Hello"
     selectId="myId"
-    [options]="['1', '2', '3']"
+    [options]="options"
     formControlName="age"
   ></lib-select>
 
-  <custom-datetime-picker
+  <vcs-select
+    label="Hello"
+    selectId="myId"
+    [options]="options"
+    [multiple]="true"
+  ></vcs-select>
+
+  <!-- <custom-datetime-picker
     formControlName="dateTime"
     (dateValChange)="onDateValChange($event)"
   >
-  </custom-datetime-picker>
+  </custom-datetime-picker> -->
 </form>
 
 {{ formGroup.value | json }}

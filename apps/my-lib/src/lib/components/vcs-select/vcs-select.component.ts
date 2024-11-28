@@ -51,7 +51,6 @@ export class VcsSelectComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // Theo dõi sự thay đổi kích thước của container
     const resizeObserver = new ResizeObserver(() => {
       this.checkContainerOverflow();
     });
