@@ -9,6 +9,7 @@ import { DatetimeModalComponent } from './components/datetime-modal/datetime-mod
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 interface FakeData {
   id: number;
@@ -31,7 +32,8 @@ interface FakeData {
     FormsModule,
     ReactiveFormsModule,
     VcsTextFieldComponent,
-    VcsTopbarComponent
+    VcsTopbarComponent,
+    TranslateModule
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -130,14 +132,17 @@ export class AppComponent implements OnInit {
     private customDialogService: CustomDialogService,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
+    private translate: TranslateService
   ) {
     this.fakeData$ = of([
       { id: 1, name: 'Nguyễn Văn A', email: 'nguyenvana@example.commmmmmmmmmmmmmmmmmmmmmmmmmmmmmm' },
       { id: 2, name: 'Trần Thị B', email: 'tranthib@example.com' },
       { id: 3, name: 'Lê Văn C', email: 'levanc@example.com' },
       { id: 4, name: 'Phạm Thị D', email: 'phamthid@example.com' },
-      { id: 5, name: 'Hoàng Văn E', email: 'hoangvane@example.com' },
+      { id: 5,  name: 'Hoàng Văn E', email: 'hoangvane@example.com' },
     ]);
+    this.translate.use('en');
+    this.translate.setDefaultLang('en');
   }
 
   onRowSelected(event: FakeData[]) {

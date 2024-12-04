@@ -3,16 +3,18 @@ import { CommonModule } from '@angular/common';
 import { LibSelectComponent, LibInputComponent, VcsSelectComponent, CustomDatetimePickerComponent } from '@ng-mf/my-lib';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-remote-home',
   standalone: true,
-  imports: [CommonModule, LibSelectComponent, LibInputComponent, ReactiveFormsModule, CustomDatetimePickerComponent, VcsSelectComponent],
+  imports: [CommonModule, LibSelectComponent, LibInputComponent, ReactiveFormsModule, CustomDatetimePickerComponent, VcsSelectComponent, TranslateModule],
   templateUrl: './app-remote-home.component.html',
   styleUrl: './app-remote-home.component.scss',
 })
 export class AppRemoteHomeComponent implements OnInit {
   errorMessages = { required: 'The name field is required' };
+  mask = '+84 000 000 0000';
 
   formGroup = new FormGroup({
     name: new FormControl('', Validators.required),

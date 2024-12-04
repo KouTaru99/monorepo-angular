@@ -16,5 +16,8 @@
   "datatable": {
     "noData": "No data available",
     "search": "Search"
+  },
+  "appRemote": {
+    "title": "App Remote"
   }
 }

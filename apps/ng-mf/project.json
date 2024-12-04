@@ -19,8 +19,13 @@
           "apps/ng-mf/src/assets",
           {
             "glob": "**/*",
-            "input": "apps/my-lib/src/lib/assets",
-            "output": "assets"
+            "input": "apps/app-remote/src/assets/i18n",
+            "output": "assets/i18n/app-remote"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/ng-mf/public",
+            "output": "/"
           }
         ],
         "styles": [

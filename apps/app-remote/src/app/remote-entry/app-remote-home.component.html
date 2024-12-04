@@ -1,3 +1,4 @@
+<h1>{{ 'appRemote.title' | translate }}</h1>
 <form [formGroup]="formGroup">
   <lib-input
     [customErrorMessages]="errorMessages"
@@ -5,7 +6,9 @@
     inputId="myId"
     formControlName="name"
     (inputValChange)="onInputValChange($event)"
-
+    [mask]="mask"
+    [inputType]="'tel-vn'"
+    [showMaskTyped]="false"
   ></lib-input>
   <lib-select
     label="Hello"

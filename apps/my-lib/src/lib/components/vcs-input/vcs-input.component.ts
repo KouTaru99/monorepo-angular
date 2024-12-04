@@ -36,6 +36,7 @@ export class LibInputComponent<T> extends ControlValueAccessorDirective<T> {
   @Input() validation = false
   @Input() mask = ''
   @Input() leadZeroDateTime = false
+  @Input() inputType: 'text' | 'number' | 'tel-vn' = 'text'
   @Output() inputValChange = new EventEmitter<any>();
 
   override ngOnInit() {

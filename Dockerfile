@@ -32,5 +32,11 @@ COPY --from=build /app/dist/apps/ng-mf /usr/share/nginx/html
 COPY --from=build /app/dist/apps/app-remote /usr/share/nginx/html/app-remote
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Add bash for envsubst
+RUN apk add --no-cache bash
+
+# Entry point script to replace env variables
+CMD ["/bin/sh", "-c", "envsubst < /usr/share/nginx/html/assets/env.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
+
+# EXPOSE 80
+# CMD ["nginx", "-g", "daemon off;"]

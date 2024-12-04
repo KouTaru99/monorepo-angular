@@ -16,5 +16,9 @@
   "datatable": {
     "noData": "No data available",
     "search": "Search"
+  },
+  "link": {
+    "home": "Home",
+    "appRemote": "AppRemote"
   }
 }

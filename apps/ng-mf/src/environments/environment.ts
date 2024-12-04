@@ -1,6 +1,8 @@
+declare const window: any;
+
 export const environment = {
   production: false,
-  apiUrl: 'http://10.255.250.168:8080/api',
-  wsUrl: 'ws://10.255.250.168:8080/ws',
-  remoteUrl: 'http://10.255.250.168:4201'
+  apiUrl: window._env?.API_URL || 'http://localhost:8080/api',
+  authUrl: window._env?.AUTH_URL || 'http://localhost:8080/auth',
+  remoteUrl: window._env?.REMOTE_URL || 'http://localhost:4201'
 };

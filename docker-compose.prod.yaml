@@ -1,13 +1,10 @@
 version: '3.8'
 services:
   frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: production
-      args:
-        - API_URL=${API_URL}
-        - AUTH_URL=${AUTH_URL}
+    image: your-image-name:latest
+    environment:
+      - API_URL=${API_URL}
+      - AUTH_URL=${AUTH_URL}
     ports:
       - "80:80"
     restart: unless-stopped
@@ -22,6 +19,24 @@ services:
       timeout: 3s
       retries: 3
       start_period: 40s
-# REMOTE_URL=http://10.255.250.186 docker-compose -f docker-compose.prod.yml up --build
+
+#Cách 1
+#API_URL=http://your-api-url
+#AUTH_URL=http://your-auth-url
+
+#Cách 2
 # args:
-#   - REMOTE_URL=http://10.255.250.186  # Set trực tiếp URL ở đây
+#   - API_URL=http://your-api-url
+#   - AUTH_URL=http://your-auth-url
+
+#Cách 3
+# docker run -d --name your-container-name -e API_URL=http://your-api-url -e AUTH_URL=http://your-auth-url your-image-name:latest
+
+#Cách 4
+# API_URL=http://your-api-url AUTH_URL=http://your-auth-url docker-compose -f docker-compose.prod.yaml up -d
+
+# Xem tất cả biến môi trường trong container
+# docker exec frontend env
+
+# Hoặc kiểm tra cụ thể biến API_URL và AUTH_URL
+# docker exec frontend printenv API_URL AUTH_URL

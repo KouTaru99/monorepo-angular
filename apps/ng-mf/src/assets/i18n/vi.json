@@ -16,5 +16,9 @@
   "datatable": {
     "noData": "Không có dữ liệu",
     "search": "Tìm kiếm dữ liệu"
+  },
+  "link": {
+    "home": "Trang chủ",
+    "appRemote": "AppRemote"
   }
 }

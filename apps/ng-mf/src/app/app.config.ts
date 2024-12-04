@@ -12,12 +12,40 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguageInterceptor, AuthInterceptor } from '@ng-mf/my-lib';
+import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // registerLocaleData(localeVi); // Đăng ký locale data
 
-// AoT requires an exported function for factories
+export class MultiTranslateHttpLoader implements TranslateLoader {
+  constructor(
+    private http: HttpClient,
+    private resources: { prefix: string; suffix: string }[] = [{
+      prefix: './assets/i18n/',
+      suffix: '.json'
+    }, {
+      prefix: './assets/i18n/app-remote/',
+      suffix: '.json'
+    }]
+  ) { }
+
+  public getTranslation(lang: string): Observable<any> {
+    return forkJoin(
+      this.resources.map(config =>
+        this.http.get(`${config.prefix}${lang}${config.suffix}`)
+      )
+    ).pipe(
+      map(responses => {
+        return responses.reduce((acc, curr) => {
+          return { ...acc, ...curr };
+        }, {});
+      })
+    );
+  }
+}
+
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new MultiTranslateHttpLoader(http);
 }
 
 export const appConfig: ApplicationConfig = {
@@ -29,25 +57,20 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     importProvidersFrom(NzModalModule),
     provideToastr(),
-    importProvidersFrom(HttpClientModule),
     importProvidersFrom(
+      HttpClientModule,
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,
           deps: [HttpClient]
         },
-        defaultLanguage: 'vi'
+        defaultLanguage: 'en'
       })
     ),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LanguageInterceptor,
       multi: true
     }
   ],

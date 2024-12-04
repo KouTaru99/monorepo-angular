@@ -16,5 +16,8 @@
   "datatable": {
     "noData": "Không có dữ liệu",
     "search": "Tìm kiếm dữ liệu"
+  },
+  "appRemote": {
+    "title": "App Remote"
   }
 }
